@@ -1,0 +1,2 @@
+﻿ALTER TABLE Symptom
+DROP COLUMN SystemId;
