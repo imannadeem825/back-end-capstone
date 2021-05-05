@@ -7,5 +7,14 @@ namespace back_end_capstone.Models
 {
     public class DailyReportSymptom
     {
+        public int Id { get; set; }
+
+        public int DailyReportId { get; set; }
+
+        public int SymptomId { get; set; }
+
+        public string Comment { get; set; }
+
+        public int Urgency { get; set; }
     }
 }

@@ -1,2 +1,5 @@
 ﻿ALTER TABLE Symptom
 DROP COLUMN SystemId;
+
+ALTER TABLE DailyReport
+DROP COLUMN Comment;
