@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
-namespace Tabloid.Repositories
+namespace back_end_capstone.Repositories
 {
     public abstract class BaseRepository
     {

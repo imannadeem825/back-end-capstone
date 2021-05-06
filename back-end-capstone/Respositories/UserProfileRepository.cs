@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using back_end_capstone.Models;
 using back_end_capstone.Utils;
 
-namespace Tabloid.Repositories
+namespace back_end_capstone.Repositories
 {
     public class UserProfileRepository : BaseRepository, IUserProfileRepository
     {
@@ -17,7 +17,7 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                       SELECT u.Id, u.FirebaseUserId, u.FirstName, u.LastName, u.Email, u.Address,
+                       SELECT u.Id, u.FirebaseId, u.FirstName, u.LastName, u.Email, u.Address,
                               u.CreateDateTime
                          FROM UserProfile u";
 
@@ -30,7 +30,7 @@ namespace Tabloid.Repositories
                         userProfile = new UserProfile()
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            FirebaseUserId = reader.GetString(reader.GetOrdinal("FirebaseUserId")),
+                            FirebaseId = reader.GetString(reader.GetOrdinal("FirebaseId")),
                             FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                             LastName = reader.GetString(reader.GetOrdinal("LastName")),
                             Email = reader.GetString(reader.GetOrdinal("Email")),
@@ -47,7 +47,7 @@ namespace Tabloid.Repositories
         }
 
 
-        public UserProfile GetByFirebaseUserId(string firebaseUserId)
+        public UserProfile GetByFirebaseId(string firebaseId)
         {
             using (var conn = Connection)
             {
@@ -55,11 +55,11 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT u.Id, u.FirebaseUserId, u.FirstName, u.LastName, u.Email, u.Address,
+                        SELECT u.Id, u.FirebaseId, u.FirstName, u.LastName, u.Email, u.Address,
                               u.CreateDateTime
                          FROM UserProfile u";
 
-                    DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseUserId);
+                    DbUtils.AddParameter(cmd, "@FirebaseId", firebaseId);
 
                     UserProfile userProfile = null;
 
@@ -69,7 +69,7 @@ namespace Tabloid.Repositories
                         userProfile = new UserProfile()
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            FirebaseUserId = reader.GetString(reader.GetOrdinal("FirebaseUserId")),
+                            FirebaseId = reader.GetString(reader.GetOrdinal("FirebaseId")),
                             FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                             LastName = reader.GetString(reader.GetOrdinal("LastName")),
                             Email = reader.GetString(reader.GetOrdinal("Email")),
@@ -92,12 +92,12 @@ namespace Tabloid.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO UserProfile (FirebaseUserId, FirstName, LastName,  
+                    cmd.CommandText = @"INSERT INTO UserProfile (FirebaseId, FirstName, LastName,  
                                                                  Email, Address, CreateDateTime)
                                         OUTPUT INSERTED.ID
-                                        VALUES (@FirebaseUserId, @FirstName, @LastName, 
+                                        VALUES (@FirebaseId, @FirstName, @LastName, 
                                                 @Email, @Address, @CreateDateTime)";
-                    DbUtils.AddParameter(cmd, "@FirebaseUserId", userProfile.FirebaseUserId);
+                    DbUtils.AddParameter(cmd, "@FirebaseId", userProfile.FirebaseId);
                     DbUtils.AddParameter(cmd, "@FirstName", userProfile.FirstName);
                     DbUtils.AddParameter(cmd, "@LastName", userProfile.LastName);
                     DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
