@@ -51,7 +51,7 @@ export function UserProfileProvider(props) {
 
   const register = (userProfile, password) => {
     return firebase.auth().createUserWithEmailAndPassword(userProfile.email, password)
-      .then((createResponse) => saveUser({ ...userProfile, firebaseUserId: createResponse.user.uid }))
+      .then((createResponse) => saveUser({ ...userProfile, firebaseId: createResponse.user.uid }))
       .then((savedUserProfile) => {
         sessionStorage.setItem("userProfile", JSON.stringify(savedUserProfile))
         setIsLoggedIn(true);
@@ -60,9 +60,9 @@ export function UserProfileProvider(props) {
 
   const getToken = () => firebase.auth().currentUser.getIdToken();
 
-  const getUserProfile = (firebaseUserId) => {
+  const getUserProfile = (firebaseId) => {
     return getToken().then((token) =>
-      fetch(`${apiUrl}/${firebaseUserId}`, {
+      fetch(`${apiUrl}/${firebaseId}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`

@@ -4,13 +4,24 @@ import { UserProfileProvider } from './components/UserProfiles/UserProfileProvid
 import React from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
 import ApplicationViews from "./components/ApplicationViews";
+import { DailyReportProvider } from './components/DailyReports/DailyReportProvider';
+import { DailyReportSymptomProvider } from './components/DailyReportSymptoms/DailyReportSymptomProvider';
+import { SymptomProvider } from './components/Symptoms/SymptomProvider';
 
 function App() {
   return (
     <Router>
       <UserProfileProvider>
         {/* <Header /> */}
-        <ApplicationViews />
+        <SymptomProvider>
+        <DailyReportProvider>
+          <DailyReportSymptomProvider>
+
+            <ApplicationViews />
+          </DailyReportSymptomProvider>
+        </DailyReportProvider>
+
+        </SymptomProvider>
       </UserProfileProvider>
     </Router>
   );

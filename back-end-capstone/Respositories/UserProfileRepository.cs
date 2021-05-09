@@ -101,7 +101,7 @@ namespace back_end_capstone.Repositories
                     DbUtils.AddParameter(cmd, "@FirstName", userProfile.FirstName);
                     DbUtils.AddParameter(cmd, "@LastName", userProfile.LastName);
                     DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
-                    DbUtils.AddParameter(cmd, "@DisplayName", userProfile.Address);
+                    DbUtils.AddParameter(cmd, "@Address", userProfile.Address);
                     DbUtils.AddParameter(cmd, "@CreateDateTime", userProfile.CreateDateTime);
 
                     userProfile.Id = (int)cmd.ExecuteScalar();

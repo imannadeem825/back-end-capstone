@@ -26,6 +26,7 @@ namespace back_end_capstone
         {
 
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+            services.AddTransient<ISymptomRepository, SymptomRepository>();
 
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
             var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
@@ -80,7 +81,7 @@ namespace back_end_capstone
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "back_end_capstone v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "back-end-capstone v1"));
             }
 
             app.UseHttpsRedirection();

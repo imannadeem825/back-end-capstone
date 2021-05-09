@@ -10,6 +10,7 @@ GO
 DROP TABLE IF EXISTS [DailyReportSymptom];
 DROP TABLE IF EXISTS [DailyReport];
 DROP TABLE IF EXISTS [UserProfile];
+DROP TABLE IF EXISTS [SymptomDetail];
 DROP TABLE IF EXISTS [Symptom];
 GO
 
@@ -27,10 +28,18 @@ GO
 
 CREATE TABLE [Symptom] (
   [Id] integer PRIMARY KEY NOT NULL,
-  [Name] nvarchar(255) NOT NULL,
-  [SystemId] integer NOT NULL
+  [Name] nvarchar(255) NOT NULL
 )
 GO
+
+CREATE TABLE [SymptomDetail] ( 
+	[Id] integer PRIMARY KEY NOT NULL,
+	[SymptomId] integer NOT NULL,
+	[UrgencyLevel] integer NOT NULL,
+	[Severity] nvarchar(255) NOT NULL
+)
+GO
+
 
 CREATE TABLE [DailyReport] (
   [Id] integer PRIMARY KEY NOT NULL,

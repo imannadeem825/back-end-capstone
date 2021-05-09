@@ -9,8 +9,9 @@ namespace back_end_capstone.Models
     {
         public int Id { get; set; }
 
-        public int UserId { get; set; }
+        public int UserProfileId { get; set; }
 
+        public List<DailyReportSymptom> DailyReportSymptoms { get; set; }
         public DateTime Date { get; set; }
     }
 }
