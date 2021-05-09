@@ -6,5 +6,6 @@ namespace back_end_capstone.Repositories
     public interface ISymptomRepository
     {
         List<Symptom> GetAllSymptoms();
+        Symptom GetSymptomDetailsBySymptomId(int id);
     }
 }

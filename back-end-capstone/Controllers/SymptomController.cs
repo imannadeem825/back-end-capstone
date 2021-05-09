@@ -26,5 +26,11 @@ namespace back_end_capstone.Controllers
         {
             return Ok(_symptomRepository.GetAllSymptoms());
         }
+
+        [HttpGet("/symptomDetails/{symptomId}")]
+        public IActionResult Get(int symptomId)
+        {
+            return Ok(_symptomRepository.GetSymptomDetailsBySymptomId(symptomId));
+        }
     }
 }

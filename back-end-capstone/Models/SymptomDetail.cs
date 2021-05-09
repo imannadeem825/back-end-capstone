@@ -5,11 +5,14 @@ using System.Threading.Tasks;
 
 namespace back_end_capstone.Models
 {
-    public class Symptom
+    public class SymptomDetail
     {
         public int Id { get; set; }
-        public string Name { get; set; }
 
-        public List<SymptomDetail> SymptomDetails { get; set; }
+        public int SymptomId { get; set; }
+
+        public int UrgencyLevel { get; set; }
+
+        public string Severity { get; set; }
     }
 }
