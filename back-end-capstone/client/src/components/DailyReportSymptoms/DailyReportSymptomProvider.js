@@ -17,15 +17,18 @@ export const DailyReportSymptomProvider = (props) => {
     const apiUrl = "/api/dailyReportSymptom"
 
     const getAllDailyReportSymptoms = () => {
-
+       
         return getToken().then((token) =>
         
         fetch(`${apiUrl}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`}})
+                
         .then(res => res.json())
+       
         .then(setDailyReportSymptoms))
+        
         }
 
     const getDailyReportSymptomById = (dailyReportSymptomId) => {

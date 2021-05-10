@@ -89,9 +89,9 @@ namespace back_end_capstone.Repositories
                     cmd.CommandText = @"
                             INSERT INTO DailyReport (UserProfileId, Date)
                             OUTPUT INSERTED.ID
-                            VALUES (@UserId, @Date)";
+                            VALUES (@UserProfileId, @Date)";
 
-                    DbUtils.AddParameter(cmd, "@UserId", dailyReport.UserProfileId);
+                    DbUtils.AddParameter(cmd, "@UserProfileId", dailyReport.UserProfileId);
                     DbUtils.AddParameter(cmd, "@Date", dailyReport.Date);
 
 

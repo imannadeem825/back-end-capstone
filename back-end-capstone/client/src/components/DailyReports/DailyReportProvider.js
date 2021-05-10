@@ -41,8 +41,9 @@ export const DailyReportProvider = (props) => {
 
 
     const addDailyReport = (dailyReport) => {
+        // debugger
         return getToken().then((token) =>
-            fetch(`/dailyReport/create`, {
+            fetch(`/api/DailyReport`, {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,

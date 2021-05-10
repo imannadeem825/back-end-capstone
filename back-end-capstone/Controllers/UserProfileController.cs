@@ -37,6 +37,18 @@ namespace back_end_capstone.Controllers
         }
 
 
+        //[HttpGet("{firebaseUserId}")]
+        //public IActionResult GetByFirebaseUserId(string firebaseUserId)
+        //{
+        //    var userProfile = _userRepository.GetByFirebaseUserId(firebaseUserId);
+        //    if (userProfile == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(userProfile);
+        //}
+
+
         [HttpGet]
         public IActionResult Get()
         {

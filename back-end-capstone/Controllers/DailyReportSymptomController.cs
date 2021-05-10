@@ -31,7 +31,7 @@ namespace back_end_capstone.Controllers
         }
 
 
-        [HttpGet("/dailyReportSymptom/getById/{dailyReporSymptomtId}")]
+        [HttpGet("/getById/{dailyReportSymptomId}")]
         public ActionResult Details(int dailyReportSymptomId)
         {
             var dailyReportSymptom = _dailyReportSymptomRepository.GetDailyReportSymptomById(dailyReportSymptomId);
@@ -44,7 +44,7 @@ namespace back_end_capstone.Controllers
 
 
 
-        [HttpPost("/dailyReportSymptom/create")]
+        [HttpPost("/dailyReportSymptomForm/{id}")]
         public IActionResult DailyReport(DailyReportSymptom dailyReportSymptom)
         {
         

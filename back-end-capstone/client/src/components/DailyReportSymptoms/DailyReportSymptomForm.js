@@ -18,6 +18,7 @@ import { SymptomContext } from "../Symptoms/SymptomProvider"
 import { DailyReportContext } from "../DailyReports/DailyReportProvider"
 import { DailyReportSymptomContext } from "./DailyReportSymptomProvider"
 import { useHistory, useParams } from 'react-router-dom';
+import { Severity } from "../SymptomDetails/SymptomDetail"
 
 
 
@@ -77,7 +78,7 @@ export const DailyReportSymptomForm = () => {
                 comment: dailyReportSymptom.comment,
                 urgency: dailyReportSymptom.urgency,
             })
-                .then(() => history.push("/dailyReportSymptoms"))
+                .then(() => history.push("/dailyReport"))
         }
     }
 
@@ -95,7 +96,9 @@ export const DailyReportSymptomForm = () => {
         const newDailyReportSymptom = { ...dailyReportSymptom }
         newDailyReportSymptom[event.target.name] = event.target.checked
          if (event.target.name === ("diarrhea") ) {
-            
+            Severity()
+         } else {
+             return null;
          }
         setDailyReportSymptom(newDailyReportSymptom)
     }
@@ -133,9 +136,9 @@ export const DailyReportSymptomForm = () => {
                 })
             }
 
-for (symptom of symptoms)
+{/* for (symptom of symptoms) */}
 
-            <fieldset className="control">
+            {/* <fieldset className="control">
                 <div className="select">
                     <select id="classId" className="form-control" onChange={handleControlledInputChange}>
                         <option value="0">Symptom Severity </option>
@@ -146,7 +149,7 @@ for (symptom of symptoms)
                         ))}
                     </select>
                 </div>
-            </fieldset>
+            </fieldset> */}
             {/* <fieldset>
                 <div className="form-group">
                     <label htmlFor="">1-3 Stools per day:</label>

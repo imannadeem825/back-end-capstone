@@ -27,7 +27,7 @@ export default function Header() {
             {isLoggedIn &&
               <NavItem className="nav-bar-link-container">
                 <NavLink tag={RRNavLink} className="nav-link" to="/">Home</NavLink>
-                <NavLink tag={RRNavLink} className="nav-link" to="/dailyReportForm">New Daily Report</NavLink>
+                <NavLink tag={RRNavLink} className="nav-link" to="/dailyReport/dailyReportForm">New Daily Report</NavLink>
                 <NavLink tag={RRNavLink} className="nav-link" to="/dailyReport">View Daily Reports</NavLink>
                 {/* <NavLink tag={RRNavLink} className="nav-link" to="/dailyReportTrend">Daily Report Trends</NavLink> */}
            

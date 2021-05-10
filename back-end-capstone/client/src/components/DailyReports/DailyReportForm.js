@@ -19,15 +19,15 @@ import { DailyReportContext } from "./DailyReportProvider"
 import { UserProfileContext } from "../UserProfiles/UserProfileProvider"
 import { useHistory, useParams } from 'react-router-dom';
 
-const currentUser = JSON.parse(sessionStorage.getItem("userProfile"));
-
+let currentUser = JSON.parse(sessionStorage.getItem("userProfile"));
+console.log(currentUser)
 
 
 export const DailyReportForm = () => {
 
     const { symptoms, getAllSymptoms } = useContext(SymptomContext)
     const { addDailyReport, getAllDailyReports, getDailyReportById } = useContext(DailyReportContext)
-    const { dailyReportId } = useParams()
+    // const { dailyReportId } = useParams()
     const history = useHistory();
 
     useEffect(() => {
@@ -37,43 +37,63 @@ export const DailyReportForm = () => {
 
 
     const [dailyReport, setDailyReport] = useState({
-        UserId: currentUser.id,
-        Date: "",
+      
+        userProfileId: currentUser.id,
+        date: "2001-05-04"
     });
 
+    console.log(dailyReport, "daily report test")
 
-    const handleSaveDailyReport= (event) => {
-        if (dailyReport.date === "") {
-            window.alert("Please add details of dailyReport")
-        } else {
-            addDailyReport({
-                userId: currentUser.id,
-                date: dailyReport.date,
-            })
-                .then(() => history.push("/dailyReportSymptom/create"))
-        }
+
+    const handleSaveDailyReport = (e) => {
+        e.preventDefault()
+        addDailyReport({
+            userProfileId: dailyReport.userProfileId,
+            date: dailyReport.date
+        })
+
+        // .then(() => history.push(`/dailyReportSymptomForm/${dailyReportId}`))
+        .then(() => history.push("/dailyReportSymptom/dailyReportSymptomForm"))
     }
 
-    useEffect(() => {
-        getAllDailyReports().then(() => {
-            if (dailyReportId) {
-                getDailyReportById(dailyReportId)
-                    .then(dailyReport => {
-                        setDailyReport(dailyReport)
-                    })
-            }
-        })
-    }, [])
+
+    // useEffect(() => {
+    //     getAllDailyReports().then(() => {
+    //         if (dailyReportId) {
+    //             getDailyReportById(dailyReportId)
+    //                 .then(dailyReport => {
+    //                     setDailyReport(dailyReport)
+    //                 })
+    //         }
+    //     })
+    // }, [])
+
+    // useEffect(() => {
+    //     getCatById(catId)
+    //       .then((response) => {
+    //         getChats()
+    //         setCat(response)
+    //       })
+    //   }, [])
+
+    //   useEffect(() => {
+    //     const filteredChatsByCat = chats.filter(chat => chat.catId === cat.id)
+    //     setFilteredChats(filteredChatsByCat)
+
+    //   }, [chats])
+
 
 
 
     return (
         <form className="dailyReportButton">
             <button className="btn btn-primary"
-                onClick={event => {
-                    event.preventDefault()
-                    handleSaveDailyReport()
-                }}>
+                onClick={
+
+                    
+                    handleSaveDailyReport
+                
+                }>
                 Track My Symptoms
             </button>
         </form>
