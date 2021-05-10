@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using back_end_capstone.Models;
 using back_end_capstone.Utils;
 
+
 namespace back_end_capstone.Repositories
 {
     public class DailyReportRepository : BaseRepository, IDailyReportRepository
@@ -99,6 +100,7 @@ namespace back_end_capstone.Repositories
             }
         }
 
+
         public void Delete(int id)
         {
             using (var conn = Connection)
@@ -114,7 +116,5 @@ namespace back_end_capstone.Repositories
                 }
             }
         }
-
-
     }
 }

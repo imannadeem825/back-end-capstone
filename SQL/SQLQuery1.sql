@@ -40,3 +40,17 @@ VALUES (1, 1, 1, '1-4 stools'), (2, 1, 2, '4-9 stools'), (3, 1, 3, '10 or more s
 (13, 5, 1, 'Some pain'), (14, 5, 2, 'Pain with infection or bleeding'), (15, 5, 3, 'Difficulty eating and swallowing'),
 (16, 6, 1, '1-3 out of 10'), (17, 6, 2, '4-6 out of 10'), (18, 6, 3, '7-10 out of 10');
 
+
+
+SELECT s.Id AS SymptomId, s.Name,
+                              sd.Id AS SymptomDetailId, sd.SymptomId AS ForeignKeySymptomId, sd.UrgencyLevel, sd.Severity
+                         FROM Symptom s
+                         LEFT JOIN SymptomDetail sd on s.Id = sd.SymptomId
+
+
+INSERT INTO DailyReport (Id, UserProfileId, [Date])
+VALUES (1, 1, '20210505 12:00:00 AM');
+
+INSERT INTO DailyReportSymptom (Id, DailyReportId, SymptomId, Comment, Urgency)
+VALUES (1, 1, 1, 'comment', 2)
+

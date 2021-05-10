@@ -2,7 +2,7 @@ import React, { useState, createContext, useContext } from "react";
 import { UserProfileContext } from "../UserProfiles/UserProfileProvider";
 
 
-export const DailyReportContext = React.createContext();
+export const DailyReportSymptomContext = React.createContext();
 
 export const DailyReportSymptomProvider = (props) => {
     const { getToken } = useContext(UserProfileContext);
@@ -42,7 +42,7 @@ export const DailyReportSymptomProvider = (props) => {
 
     const addDailyReportSymptom = (dailyReportSymptom) => {
         return getToken().then((token) =>
-            fetch(`/dailyReportSymptom/create`, {
+            fetch(`${apiUrl}/create`, {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -56,7 +56,7 @@ export const DailyReportSymptomProvider = (props) => {
 
     const editDailyReportSymptom = (dailyReportSymptom) => {
         return getToken().then((token) =>
-            fetch(`/dailyReportSymptom/${dailyReportSymptom.id}/edit`, {
+            fetch(`${apiUrl}/${dailyReportSymptom.id}/edit`, {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -70,7 +70,7 @@ export const DailyReportSymptomProvider = (props) => {
 
     const deleteDailyReportSymptom = (dailyReportSymptomId) => {
         return getToken().then((token) =>
-            fetch(`/dailyReportSymptom/delete/${dailyReportSymptomId}`, {
+            fetch(`${apiUrl}/delete/${dailyReportSymptomId}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`

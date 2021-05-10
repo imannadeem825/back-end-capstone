@@ -27,6 +27,7 @@ namespace back_end_capstone
 
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddTransient<ISymptomRepository, SymptomRepository>();
+            services.AddTransient<IDailyReportRepository, DailyReportRepository>();
 
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
             var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";

@@ -7,6 +7,7 @@ export const SymptomContext = React.createContext();
 export const SymptomProvider = (props) => {
 
     const [symptoms, setSymptoms] = useState([]);
+    const [symptomDetails, setSymptomDetails] = useState([]);
     /*
         Above line: Array destructoring, useState is returning what is declared 
         in the (), so in this instance it will be returning an array with a 0 
@@ -22,10 +23,17 @@ export const SymptomProvider = (props) => {
                 .then(setSymptoms));
     };
 
+    const getSymptomDetailsBySymptomId = (symptomId) => {
+        return (
+            fetch(`/symptomDetails/${symptomId}`)
+                .then((res) => res.json())
+                .then(setSymptomDetails));
+    };
+
 
     return (
         <SymptomContext.Provider value={{
-            symptoms, getAllSymptoms
+            symptoms, symptomDetails, getAllSymptoms, getSymptomDetailsBySymptomId
         }}>
             {props.children}
         </SymptomContext.Provider>
