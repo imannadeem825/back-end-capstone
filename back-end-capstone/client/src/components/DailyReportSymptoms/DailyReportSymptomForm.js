@@ -13,6 +13,10 @@
 // 
 
 
+
+
+// condition ? exprIfTrue : exprIfFalse
+
 import React, { useContext, useEffect, useState } from "react"
 import { SymptomContext } from "../Symptoms/SymptomProvider"
 import { DailyReportContext } from "../DailyReports/DailyReportProvider"
@@ -22,28 +26,25 @@ import { Severity } from "../SymptomDetails/SymptomDetail"
 
 
 
-
-
 export const DailyReportSymptomForm = () => {
 
     const { symptoms, symptomDetails, getAllSymptoms, getSymptomDetailsBySymptomId } = useContext(SymptomContext)
-
     const { getDailyReportById } = useContext(DailyReportContext)
     const { dailyReportSymptoms, getAllDailyReportSymptoms, addDailyReportSymptom } = useContext(DailyReportSymptomContext)
-
     const { dailyReportId } = useParams()
     const history = useHistory();
+
 
     useEffect(() => {
         console.log("get symptoms")
         getAllSymptoms()
     }, [])
 
+
     useEffect(() => {
         console.log("get daily report symptoms")
         getAllDailyReportSymptoms()
     }, [])
-
 
 
     const [dailyReportSymptom, setDailyReportSymptom] = useState({
@@ -54,19 +55,21 @@ export const DailyReportSymptomForm = () => {
     });
 
 
-    const handleControlledInputChange = (event) => {
-        const newDailyReportSymptom = { ...dailyReportSymptom }
-        let selectedVal = event.target.value
+    const [checkedSymptoms, setCheckedSymptoms] = useState([])
 
-        if (event.target.id.includes("Id")) {
-            selectedVal = parseInt(selectedVal)
+
+    const handleCheckboxChangeTwo = (event) => {
+        const symptomId = parseInt(event.target.value)
+        const idPosition = checkedSymptoms.indexOf(symptomId)
+        if (idPosition >= 0) {
+            const copy = [...checkedSymptoms]
+            copy.splice(idPosition, 1)
+            setCheckedSymptoms(copy)
+        } else if (idPosition < 0) {
+            setCheckedSymptoms([symptomId, ...checkedSymptoms])
         }
-        newDailyReportSymptom[event.target.id] = selectedVal
-        setDailyReportSymptom(newDailyReportSymptom)
     }
 
-
-    //for symptom of symptoms 
 
     const handleSaveDailyReportSymptoms = (event) => {
         if (dailyReportSymptoms.comment === "" || dailyReportSymptoms.urgency === "" || dailyReportSymptoms.notes === "") {
@@ -83,97 +86,43 @@ export const DailyReportSymptomForm = () => {
     }
 
 
-
-    // const handleCheckboxChange = (event) => {
-    //     const newDailyReportSymptom = { ...dailyReportSymptom }
-    //     newDailyReportSymptom[event.target.id] = event.target.checked
-    //     setDailyReportSymptom(newDailyReportSymptom)
-    // }
-
-
-    const handleCheckboxChange = (event) => {
-        
-        const newDailyReportSymptom = { ...dailyReportSymptom }
-        newDailyReportSymptom[event.target.name] = event.target.checked
-         if (event.target.name === ("diarrhea") ) {
-            Severity()
-         } else {
-             return null;
-         }
-        setDailyReportSymptom(newDailyReportSymptom)
-    }
-
-    //ternary if isChecked == true, then display other checkboxes for urgency and comment textarea
-    // first hard code options that come up after checkbox click
-    // dropdown for urgency instead of checkboxes
-    //collapse reactstrap
-    // for each (symptom : map) {addCheckbox();} 
-    // if checkbox {add div} else {remove div}
-
-    //var checkbox = document.querySelector("input[name=checkbox]");
-
-    /*checkbox.addEventListener('change', function () {
-        if (this.checked) {
-            console.log("Checkbox is checked..");
-        } else {
-            console.log("Checkbox is not checked..");
-        }
-    }); */
     return (
 
         <form className="dailyReportForm">
             <h2 className="dailyReportForm__title">Record Symptoms</h2>
-
+            {/* this is mapping over the six symptoms that are displayed before any checkboxes are checked */}
             {
                 symptoms.map(symptom => {
+                    const symptomId = parseInt(symptom.id)
+
                     console.log(symptoms)
+                    if (checkedSymptoms.includes(symptomId)) {
+                        return (<>
+                            {/* this returns the label and the checkbox */}
+                            <div className="form-group">
+                                <label htmlFor="">{symptom.name}</label>
+                                <input key={symptom.id} type="checkbox" checked={checkedSymptoms.includes(symptomId)} id="checkbox" onChange={(e) => handleCheckboxChangeTwo(e)} value={symptom.id} />
+                            </div>
+                            {/* this is the dropdown once checkbox is checked */}
+                            <label htmlFor="">Comment</label>
+                            <textarea ></textarea>
+                            {/* severity is imported from symptom detail module, which is for the dropdown */}
+                            <Severity symptomId={symptomId} symptomDetails={symptomDetails} getSymptomDetailsBySymptomId={getSymptomDetailsBySymptomId} />
+                        </>
+                        )
+                    }
                     return (
                         <div className="form-group">
                             <label htmlFor="">{symptom.name}</label>
-                            <input type="checkbox" name="diarrhea" className="checkbox" id="checkbox" onChange={handleCheckboxChange} required autoFocus className="form-control" value={symptom.name} />
+                            <input key={symptom.id} type="checkbox" checked={checkedSymptoms.includes(symptomId)} id="checkbox" onChange={(e) => handleCheckboxChangeTwo(e)} value={symptom.id} />
                         </div>
                     )
                 })
             }
 
-{/* for (symptom of symptoms) */}
 
-            {/* <fieldset className="control">
-                <div className="select">
-                    <select id="classId" className="form-control" onChange={handleControlledInputChange}>
-                        <option value="0">Symptom Severity </option>
-                        {symptomDetails.map(s => (
-                            <option key={s.id} value={s.id}>
-                                {s.severity}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-            </fieldset> */}
-            {/* <fieldset>
-                <div className="form-group">
-                    <label htmlFor="">1-3 Stools per day:</label>
-                    <input type="checkbox" className="checkbox" id="diarrheaUrgency1" onChange={handleCheckboxChange} required autoFocus className="form-control" value={symptom.urgency} />
-                </div>
-            </fieldset>
-            <fieldset>
-                <div className="form-group">
-                    <label htmlFor="">3-5 Stools per day:</label>
-                    <input type="checkbox" className="checkbox" id="diarrheaUrgency2" onChange={handleCheckboxChange} required autoFocus className="form-control" value={symptom.urgency} />
-                </div>
-            </fieldset>
-            <fieldset>
-                <div className="form-group">
-                    <label htmlFor="">5-7 Stools per day:</label>
-                    <input type="checkbox" className="checkbox" id="diarrheaUrgency3" onChange={handleCheckboxChange} required autoFocus className="form-control" value={symptom.urgency} />
-                </div>
-            </fieldset>
-            <fieldset>
-                <div className="form-group">
-                    <label htmlFor="">Comments:</label>
-                    <input type="textarea" className="comment" id="symptomComment" onChange={handleCheckboxChange} required autoFocus className="form-control" value={symptom.urgency} />
-                </div>
-            </fieldset> */}
+
+          
         </form>
     )
 }

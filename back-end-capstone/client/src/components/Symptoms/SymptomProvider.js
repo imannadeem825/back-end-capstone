@@ -27,7 +27,7 @@ export const SymptomProvider = (props) => {
         return (
             fetch(`/api/symptom/symptomDetails/${symptomId}`)
                 .then((res) => res.json())
-                .then(setSymptomDetails));
+                .then((data) => data))
     };
 
 

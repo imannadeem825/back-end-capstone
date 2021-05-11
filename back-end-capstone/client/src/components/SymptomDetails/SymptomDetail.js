@@ -4,51 +4,28 @@ import { DailyReportContext } from "../DailyReports/DailyReportProvider"
 import { DailyReportSymptomContext } from "../DailyReportSymptoms/DailyReportSymptomProvider"
 import { useHistory, useParams } from 'react-router-dom';
 
-export const Severity = () => {
+//this module is for the symptom severity dropdown (appears once a symptom is checked)
+// it displays the severity text for the user to see in the dropdown rather than an id
 
-    const { symptoms, symptomDetails, getAllSymptoms, getSymptomDetailsBySymptomId } = useContext(SymptomContext)
-
-    const { getDailyReportById } = useContext(DailyReportContext)
-    const { dailyReportSymptoms, getAllDailyReportSymptoms, addDailyReportSymptom } = useContext(DailyReportSymptomContext)
-
-    const { dailyReportId } = useParams()
-    const history = useHistory();
+export const Severity = ({symptomId, getSymptomDetailsBySymptomId}) => {
+    const [symptomDetails, setSymptomDetails] = useState([])
 
     useEffect(() => {
-        console.log("get symptoms")
-        getAllSymptoms()
-    }, [])
-
-    useEffect(() => {
-        console.log("get daily report symptoms")
-        getAllDailyReportSymptoms()
+        console.log("symptom details")
+        getSymptomDetailsBySymptomId(symptomId).then(setSymptomDetails)
     }, [])
 
 
-
-    const [dailyReportSymptom, setDailyReportSymptom] = useState({
-        DailyReportId: "",
-        SymptomId: "",
-        Comment: false,
-        Urgency: ""
-    });
-
-    const handleControlledInputChange = (event) => {
-        const newDailyReportSymptom = { ...dailyReportSymptom }
-        let selectedVal = event.target.value
-
-        if (event.target.id.includes("Id")) {
-            selectedVal = parseInt(selectedVal)
-        }
-        newDailyReportSymptom[event.target.id] = selectedVal
-        setDailyReportSymptom(newDailyReportSymptom)
-    }
-
+    if (symptomId === 1) {
+     
+        
     return (
 
         <fieldset className="control">
-            <div className="select">
-                <select id="classId" className="form-control" onChange={handleControlledInputChange}>
+            <div className="select"> Mouth Sores
+                <select id="classId" className="form-control" 
+                // onChange={handleControlledInputChange}
+                >
                     <option value="0">Symptom Severity </option>
                     {symptomDetails.map(s => (
                         <option key={s.id} value={s.id}>
@@ -59,6 +36,104 @@ export const Severity = () => {
             </div>
         </fieldset>
     )
+    } else if (symptomId === 2) {
+        
+    return (
+
+        <fieldset className="control">
+            <div className="select"> Vomiting
+                <select id="classId" className="form-control" 
+                // onChange={handleControlledInputChange}
+                >
+                    <option value="0">Symptom Severity </option>
+                    {symptomDetails.map(s => (
+                        <option key={s.id} value={s.id}>
+                            {s.severity}
+                        </option>
+                    ))}
+                </select>
+            </div>
+        </fieldset>
+    )
+    } else if (symptomId === 3 ) {
+        
+    return (
+
+        <fieldset className="control">
+            <div className="select"> Nausea
+                <select id="classId" className="form-control" 
+                // onChange={handleControlledInputChange}
+                >
+                    <option value="0">Symptom Severity </option>
+                    {symptomDetails.map(s => (
+                        <option key={s.id} value={s.id}>
+                            {s.severity}
+                        </option>
+                    ))}
+                </select>
+            </div>
+        </fieldset>
+    )
+    } else if (symptomId === 4) {
+        
+    return (
+
+        <fieldset className="control">
+            <div className="select"> Fever
+                <select id="classId" className="form-control" 
+                // onChange={handleControlledInputChange}
+                >
+                    <option value="0">Symptom Severity </option>
+                    {symptomDetails.map(s => (
+                        <option key={s.id} value={s.id}>
+                            {s.severity}
+                        </option>
+                    ))}
+                </select>
+            </div>
+        </fieldset>
+    )
+    } else if (symptomId === 5) {
+        
+    return (
+
+        <fieldset className="control">
+            <div className="select"> Diarrhea
+                <select id="classId" className="form-control" 
+                // onChange={handleControlledInputChange}
+                >
+                    <option value="0">Symptom Severity </option>
+                    {symptomDetails.map(s => (
+                        <option key={s.id} value={s.id}>
+                            {s.severity}
+                        </option>
+                    ))}
+                </select>
+            </div>
+        </fieldset>
+    )
+    } else {
+        
+    return (
+
+        <fieldset className="control">
+            <div className="select"> Pain
+                <select id="classId" className="form-control" 
+                // onChange={handleControlledInputChange}
+                >
+                    <option value="0">Symptom Severity </option>
+                    {symptomDetails.map(s => (
+                        <option key={s.id} value={s.id}>
+                            {s.severity}
+                        </option>
+                    ))}
+                </select>
+            </div>
+        </fieldset>
+    )
+    }
+
+
 
     
 
