@@ -43,9 +43,10 @@ export const DailyReportSymptomProvider = (props) => {
     };
 
 
-    const addDailyReportSymptom = (dailyReportSymptom) => {
+    const addDailyReportSymptom = (dailyReportId, dailyReportSymptom) => {
+        debugger
         return getToken().then((token) =>
-            fetch(`${apiUrl}/create`, {
+            fetch(`dailyReportSymptomForm/${dailyReportId}`, {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,

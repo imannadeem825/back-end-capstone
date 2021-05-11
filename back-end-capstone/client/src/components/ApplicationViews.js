@@ -47,7 +47,7 @@ export default function ApplicationViews() {
 
                 {/* DAILY REPORT SYMPTOM  */}
 
-                <Route exact path="/dailyReportSymptom/dailyReportSymptomForm">    
+                <Route exact path="/dailyReportSymptomForm/:accessDailyReportId">    
                     <DailyReportSymptomForm />  
                 </Route>
             </Switch>

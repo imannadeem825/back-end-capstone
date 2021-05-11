@@ -1,4 +1,5 @@
 import React, { useState, createContext, useContext } from "react";
+import { DailyReportSymptomProvider } from "../DailyReportSymptoms/DailyReportSymptomProvider";
 import { UserProfileContext } from "../UserProfiles/UserProfileProvider";
 
 
@@ -6,7 +7,9 @@ export const DailyReportContext = React.createContext();
 
 export const DailyReportProvider = (props) => {
     const { getToken } = useContext(UserProfileContext);
+   
     const [dailyReports, setDailyReports] = useState([]);
+    const [dailyReportId, setDailyReportId] = useState(0) 
     /*
         Above line: Array destructoring, useState is returning what is declared 
         in the (), so in this instance it will be returning an array with a 0 
@@ -19,14 +22,16 @@ export const DailyReportProvider = (props) => {
     const getAllDailyReports = () => {
 
         return getToken().then((token) =>
-        
-        fetch(`${apiUrl}`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`}})
-        .then(res => res.json())
-        .then(setDailyReports))
-        }
+
+            fetch(`${apiUrl}`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then(res => res.json())
+                .then(setDailyReports))
+    }
 
     const getDailyReportById = (dailyReportId) => {
         return getToken().then((token) =>
@@ -41,7 +46,6 @@ export const DailyReportProvider = (props) => {
 
 
     const addDailyReport = (dailyReport) => {
-        // debugger
         return getToken().then((token) =>
             fetch(`/api/DailyReport`, {
                 method: "POST",
@@ -51,8 +55,11 @@ export const DailyReportProvider = (props) => {
                 },
                 body: JSON.stringify(dailyReport),
             })
-        )
-    };
+                .then((response) => response.json())
+                .then((jsonResponse) => {
+                    setDailyReportId(jsonResponse)
+                }))
+    }
 
 
     const deleteDailyReport = (dailyReportId) => {
@@ -69,7 +76,7 @@ export const DailyReportProvider = (props) => {
     return (
         <DailyReportContext.Provider value={{
             dailyReports, getAllDailyReports, getDailyReportById,
-            addDailyReport, deleteDailyReport
+            addDailyReport, deleteDailyReport, dailyReportId
         }}>
             {props.children}
         </DailyReportContext.Provider>

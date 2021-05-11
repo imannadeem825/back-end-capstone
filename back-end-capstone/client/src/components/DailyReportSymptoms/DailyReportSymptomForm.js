@@ -3,19 +3,15 @@
 // make sure new daily report is saved in back end with userId on it--"track my symptoms" button can direct them to the form, and create the dailyreport object/send to database
 // when a checkbox is clicked, state must be updated in form 
 // when "save" is clicked, all data must save to back end (x number of records of dailyreportsymptom table)
-// 
 
 // read react hook form/watch videos
 // const { register, handleSubmit, errors, formState } = useForm()
 // register contains data, handleSubmit. console.log register
 // instantiate dailyreport object, connect dailyreportform table
 // get checkboxes working/returning true and false
-// 
 
 
 
-
-// condition ? exprIfTrue : exprIfFalse
 
 import React, { useContext, useEffect, useState } from "react"
 import { SymptomContext } from "../Symptoms/SymptomProvider"
@@ -30,10 +26,11 @@ export const DailyReportSymptomForm = () => {
 
     const { symptoms, symptomDetails, getAllSymptoms, getSymptomDetailsBySymptomId } = useContext(SymptomContext)
     const { getDailyReportById } = useContext(DailyReportContext)
-    const { dailyReportSymptoms, getAllDailyReportSymptoms, addDailyReportSymptom } = useContext(DailyReportSymptomContext)
-    const { dailyReportId } = useParams()
+    const { addDailyReportSymptom } = useContext(DailyReportSymptomContext)
+    const { accessDailyReportId } = useParams()
     const history = useHistory();
 
+    console.log(parseInt(accessDailyReportId))
 
     useEffect(() => {
         console.log("get symptoms")
@@ -41,18 +38,14 @@ export const DailyReportSymptomForm = () => {
     }, [])
 
 
-    useEffect(() => {
-        console.log("get daily report symptoms")
-        getAllDailyReportSymptoms()
-    }, [])
-
-
     const [dailyReportSymptom, setDailyReportSymptom] = useState({
-        DailyReportId: "",
-        SymptomId: "",
-        Comment: false,
-        Urgency: ""
+        // DailyReportId: 0,
+        // SymptomId: 0,
+        // Comment: "",
+        // Urgency: 0
     });
+
+    const [dailyReportSymptoms, setDailyReportSymptoms] = useState([])
 
 
     const [checkedSymptoms, setCheckedSymptoms] = useState([])
@@ -70,32 +63,65 @@ export const DailyReportSymptomForm = () => {
         }
     }
 
+    // make array to push new objects to, and save that
 
     const handleSaveDailyReportSymptoms = (event) => {
-        if (dailyReportSymptoms.comment === "" || dailyReportSymptoms.urgency === "" || dailyReportSymptoms.notes === "") {
-            window.alert("Please add details of dailyReportSymptom")
+
+        event.preventDefault()
+
+        if (dailyReportSymptoms.comment === "" || dailyReportSymptoms.urgency === 0) {
+            window.alert("Please add details about symptom")
         } else {
-            addDailyReportSymptom({
-                dailyReportId: parseInt(dailyReportId),
-                symptomId: dailyReportSymptom.symptomId,
-                comment: dailyReportSymptom.comment,
-                urgency: dailyReportSymptom.urgency,
-            })
-                .then(() => history.push("/dailyReport"))
+        
+
+            let dailyReportSymptoms = newUnfilteredDailyReportSymptoms.filter((i) => i.urgency !== "0")
+
+            addDailyReportSymptom(parseInt(accessDailyReportId), dailyReportSymptoms).then(() => { history.push("/dailyReport") })
         }
     }
 
 
-    return (
 
+
+    let newUnfilteredDailyReportSymptoms = [...dailyReportSymptoms]
+
+    const urgencyForSymptoms = (symptomId, urgency) => {
+
+        let dailyReportSymptomToEdit = newUnfilteredDailyReportSymptoms.find(d => parseInt(d.symptomId) === (parseInt(symptomId)))
+
+        if (dailyReportSymptomToEdit) {
+            let dailyReportSymptomIndex = newUnfilteredDailyReportSymptoms.findIndex((i => i.symptomId === symptomId));
+
+            newUnfilteredDailyReportSymptoms[dailyReportSymptomIndex].urgency = parseInt(urgency)
+
+            setDailyReportSymptoms(newUnfilteredDailyReportSymptoms);
+
+        } else {
+            
+            let newDailyReportSymptom = { ...dailyReportSymptom }
+            newDailyReportSymptom.DailyReportId= parseInt(accessDailyReportId);
+            newDailyReportSymptom.SymptomId = parseInt(symptomId);
+            newDailyReportSymptom.Urgency = parseInt(urgency);
+            // newDailyReportSymptom.Comment = comment
+
+            newUnfilteredDailyReportSymptoms.push(newDailyReportSymptom);
+
+            setDailyReportSymptoms(newUnfilteredDailyReportSymptoms);
+
+        }
+    }
+
+    console.log(newUnfilteredDailyReportSymptoms)
+
+
+
+    return (
         <form className="dailyReportForm">
             <h2 className="dailyReportForm__title">Record Symptoms</h2>
             {/* this is mapping over the six symptoms that are displayed before any checkboxes are checked */}
             {
                 symptoms.map(symptom => {
                     const symptomId = parseInt(symptom.id)
-
-                    console.log(symptoms)
                     if (checkedSymptoms.includes(symptomId)) {
                         return (<>
                             {/* this returns the label and the checkbox */}
@@ -104,10 +130,11 @@ export const DailyReportSymptomForm = () => {
                                 <input key={symptom.id} type="checkbox" checked={checkedSymptoms.includes(symptomId)} id="checkbox" onChange={(e) => handleCheckboxChangeTwo(e)} value={symptom.id} />
                             </div>
                             {/* this is the dropdown once checkbox is checked */}
-                            <label htmlFor="">Comment</label>
-                            <textarea ></textarea>
+
                             {/* severity is imported from symptom detail module, which is for the dropdown */}
-                            <Severity symptomId={symptomId} symptomDetails={symptomDetails} getSymptomDetailsBySymptomId={getSymptomDetailsBySymptomId} />
+                            <Severity symptomId={symptomId} symptomDetails={symptomDetails} getSymptomDetailsBySymptomId={getSymptomDetailsBySymptomId} handleSelect={urgencyForSymptoms} />
+                            <label htmlFor="">Comment</label>
+                            <textarea id={symptomId}></textarea>
                         </>
                         )
                     }
@@ -119,22 +146,16 @@ export const DailyReportSymptomForm = () => {
                     )
                 })
             }
-
-
-
-          
+            <button className="btn btn-primary"
+                onClick={
+           
+                    handleSaveDailyReportSymptoms
+                }>
+                Save Daily Report
+            </button>
         </form>
     )
 }
 
-
-            //     <button className="btn btn-primary"
-            //         onClick={event => {
-            //             event.preventDefault()
-            //             handleSaveSymptom()
-            //         }}>
-            //         Save Symptom
-            // </button>
-            // </div>
 
 

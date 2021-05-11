@@ -26,14 +26,25 @@ console.log(currentUser)
 export const DailyReportForm = () => {
 
     const { symptoms, getAllSymptoms } = useContext(SymptomContext)
-    const { addDailyReport, getAllDailyReports, getDailyReportById } = useContext(DailyReportContext)
-    // const { dailyReportId } = useParams()
+    const { addDailyReport, getAllDailyReports, getDailyReportById, dailyReportId } = useContext(DailyReportContext)
+  
     const history = useHistory();
+    
 
     useEffect(() => {
         console.log("get symptoms")
         getAllSymptoms()
     }, [])
+
+
+    useEffect(() => {
+        
+        console.log(dailyReportId)
+        if (dailyReportId.id > 0) {
+            const accessDailyReportId = dailyReportId.id
+            history.push(`/dailyReportSymptomForm/${accessDailyReportId}`)
+        }
+    }, [dailyReportId])
 
 
     const [dailyReport, setDailyReport] = useState({
@@ -51,48 +62,14 @@ export const DailyReportForm = () => {
             userProfileId: dailyReport.userProfileId,
             date: dailyReport.date
         })
-
-        // .then(() => history.push(`/dailyReportSymptomForm/${dailyReportId}`))
-        .then(() => history.push("/dailyReportSymptom/dailyReportSymptomForm"))
     }
-
-
-    // useEffect(() => {
-    //     getAllDailyReports().then(() => {
-    //         if (dailyReportId) {
-    //             getDailyReportById(dailyReportId)
-    //                 .then(dailyReport => {
-    //                     setDailyReport(dailyReport)
-    //                 })
-    //         }
-    //     })
-    // }, [])
-
-    // useEffect(() => {
-    //     getCatById(catId)
-    //       .then((response) => {
-    //         getChats()
-    //         setCat(response)
-    //       })
-    //   }, [])
-
-    //   useEffect(() => {
-    //     const filteredChatsByCat = chats.filter(chat => chat.catId === cat.id)
-    //     setFilteredChats(filteredChatsByCat)
-
-    //   }, [chats])
-
-
 
 
     return (
         <form className="dailyReportButton">
             <button className="btn btn-primary"
-                onClick={
-
-                    
-                    handleSaveDailyReport
-                
+                onClick={   
+                    handleSaveDailyReport               
                 }>
                 Track My Symptoms
             </button>

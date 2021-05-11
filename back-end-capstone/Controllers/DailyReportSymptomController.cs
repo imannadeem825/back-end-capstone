@@ -44,7 +44,7 @@ namespace back_end_capstone.Controllers
 
 
 
-        [HttpPost("/dailyReportSymptomForm/{id}")]
+        [HttpPost("{id}")]
         public IActionResult DailyReport(DailyReportSymptom dailyReportSymptom)
         {
         
