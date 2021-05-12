@@ -51,7 +51,7 @@ export const DailyReportSymptomForm = () => {
     const [checkedSymptoms, setCheckedSymptoms] = useState([])
 
 
-    const handleCheckboxChangeTwo = (event) => {
+    const handleCheckboxChange = (event) => {
         const symptomId = parseInt(event.target.value)
         const idPosition = checkedSymptoms.indexOf(symptomId)
         if (idPosition >= 0) {
@@ -66,52 +66,41 @@ export const DailyReportSymptomForm = () => {
     // make array to push new objects to, and save that
 
     const handleSaveDailyReportSymptoms = (event) => {
-
         event.preventDefault()
 
         if (dailyReportSymptoms.comment === "" || dailyReportSymptoms.urgency === 0) {
             window.alert("Please add details about symptom")
         } else {
-        
-
-            let dailyReportSymptoms = newUnfilteredDailyReportSymptoms.filter((i) => i.urgency !== "0")
-
+            let dailyReportSymptoms = newDailyReportSymptoms.filter((i) => i.urgency !== "0")
             addDailyReportSymptom(parseInt(accessDailyReportId), dailyReportSymptoms).then(() => { history.push("/dailyReport") })
         }
     }
 
 
 
-
-    let newUnfilteredDailyReportSymptoms = [...dailyReportSymptoms]
+    let newDailyReportSymptoms = [...dailyReportSymptoms]
 
     const urgencyForSymptoms = (symptomId, urgency) => {
-
-        let dailyReportSymptomToEdit = newUnfilteredDailyReportSymptoms.find(d => parseInt(d.symptomId) === (parseInt(symptomId)))
+        let dailyReportSymptomToEdit = newDailyReportSymptoms.find(d => parseInt(d.symptomId) === (parseInt(symptomId)))
 
         if (dailyReportSymptomToEdit) {
-            let dailyReportSymptomIndex = newUnfilteredDailyReportSymptoms.findIndex((i => i.symptomId === symptomId));
-
-            newUnfilteredDailyReportSymptoms[dailyReportSymptomIndex].urgency = parseInt(urgency)
-
-            setDailyReportSymptoms(newUnfilteredDailyReportSymptoms);
+            let dailyReportSymptomIndex = newDailyReportSymptoms.findIndex((i => i.symptomId === symptomId));
+            newDailyReportSymptoms[dailyReportSymptomIndex].urgency = parseInt(urgency)
+            setDailyReportSymptoms(newDailyReportSymptoms);
 
         } else {
-            
             let newDailyReportSymptom = { ...dailyReportSymptom }
-            newDailyReportSymptom.DailyReportId= parseInt(accessDailyReportId);
+            newDailyReportSymptom.DailyReportId = parseInt(accessDailyReportId);
             newDailyReportSymptom.SymptomId = parseInt(symptomId);
             newDailyReportSymptom.Urgency = parseInt(urgency);
             // newDailyReportSymptom.Comment = comment
 
-            newUnfilteredDailyReportSymptoms.push(newDailyReportSymptom);
-
-            setDailyReportSymptoms(newUnfilteredDailyReportSymptoms);
-
+            newDailyReportSymptoms.push(newDailyReportSymptom);
+            setDailyReportSymptoms(newDailyReportSymptoms);
         }
     }
 
-    console.log(newUnfilteredDailyReportSymptoms)
+    console.log(newDailyReportSymptoms)
 
 
 
@@ -127,10 +116,9 @@ export const DailyReportSymptomForm = () => {
                             {/* this returns the label and the checkbox */}
                             <div className="form-group">
                                 <label htmlFor="">{symptom.name}</label>
-                                <input key={symptom.id} type="checkbox" checked={checkedSymptoms.includes(symptomId)} id="checkbox" onChange={(e) => handleCheckboxChangeTwo(e)} value={symptom.id} />
+                                <input key={symptom.id} type="checkbox" checked={checkedSymptoms.includes(symptomId)} id="checkbox" onChange={(e) => handleCheckboxChange(e)} value={symptom.id} />
                             </div>
-                            {/* this is the dropdown once checkbox is checked */}
-
+                            {/* this is what appears after checkbox is checked: symptom severity select and comment */}
                             {/* severity is imported from symptom detail module, which is for the dropdown */}
                             <Severity symptomId={symptomId} symptomDetails={symptomDetails} getSymptomDetailsBySymptomId={getSymptomDetailsBySymptomId} handleSelect={urgencyForSymptoms} />
                             <label htmlFor="">Comment</label>
@@ -141,16 +129,13 @@ export const DailyReportSymptomForm = () => {
                     return (
                         <div className="form-group">
                             <label htmlFor="">{symptom.name}</label>
-                            <input key={symptom.id} type="checkbox" checked={checkedSymptoms.includes(symptomId)} id="checkbox" onChange={(e) => handleCheckboxChangeTwo(e)} value={symptom.id} />
+                            <input key={symptom.id} type="checkbox" checked={checkedSymptoms.includes(symptomId)} id="checkbox" onChange={(e) => handleCheckboxChange(e)} value={symptom.id} />
                         </div>
                     )
                 })
             }
             <button className="btn btn-primary"
-                onClick={
-           
-                    handleSaveDailyReportSymptoms
-                }>
+                onClick={handleSaveDailyReportSymptoms}>
                 Save Daily Report
             </button>
         </form>

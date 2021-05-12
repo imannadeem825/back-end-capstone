@@ -41,13 +41,13 @@ export default function ApplicationViews() {
                 <Route exact path="/dailyReport">
                     <DailyReportList />
                 </Route>
-                {/* <Route exact path="/getById/${dailyReportId}">
+                {/* <Route exact path="/dailyReport/detail/${dailyReport.id}">
                     <DailyReportDetails />
                 </Route> */}
 
                 {/* DAILY REPORT SYMPTOM  */}
 
-                <Route exact path="/dailyReportSymptomForm/:accessDailyReportId">    
+                <Route exact path="/dailyReportSymptomForm/:dailyReportid(\d+)">    
                     <DailyReportSymptomForm />  
                 </Route>
             </Switch>

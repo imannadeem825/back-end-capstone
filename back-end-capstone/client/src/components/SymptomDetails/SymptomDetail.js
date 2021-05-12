@@ -4,7 +4,7 @@ import { DailyReportContext } from "../DailyReports/DailyReportProvider"
 import { DailyReportSymptomContext } from "../DailyReportSymptoms/DailyReportSymptomProvider"
 import { useHistory, useParams } from 'react-router-dom';
 
-//this module is for the symptom severity dropdown (appears once a symptom is checked)
+// this module is for the symptom severity dropdown (appears once a symptom is checked)
 // it displays the severity text for the user to see in the dropdown rather than an id
 
 export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect }) => {
