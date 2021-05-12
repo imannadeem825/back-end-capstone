@@ -11,7 +11,17 @@
 // get checkboxes working/returning true and false
 
 
-
+//infinite loop here; -1 index position (cannot find symptomId in array so it returns -1). so we need to figure out why symptomId is not being put into the array
+    //     const idPosition = checkedSymptoms.indexOf(symptomId)
+    //     if (idPosition != -1) {
+    //         const copy = [...checkedSymptoms]
+    //         console.log(idPosition, "idPosition test")
+    //         copy.splice(idPosition, 1)
+    //         setCheckedSymptoms(copy)
+    //     } else if (idPosition === -1) {
+    //         setCheckedSymptoms([symptomId, ...checkedSymptoms])
+    //     }
+    // }
 
 import React, { useContext, useEffect, useState } from "react"
 import { SymptomContext } from "../Symptoms/SymptomProvider"
@@ -27,15 +37,18 @@ export const DailyReportSymptomForm = () => {
     const { symptoms, symptomDetails, getAllSymptoms, getSymptomDetailsBySymptomId } = useContext(SymptomContext)
     const { getDailyReportById } = useContext(DailyReportContext)
     const { addDailyReportSymptom } = useContext(DailyReportSymptomContext)
-    const { accessDailyReportId } = useParams()
+    const { dailyReportId } = useParams()
     const history = useHistory();
 
-    console.log(parseInt(accessDailyReportId))
+    console.log(dailyReportId, "use params")
 
     useEffect(() => {
-        console.log("get symptoms")
+        console.log(getAllSymptoms, "get symptoms")
         getAllSymptoms()
+       
     }, [])
+
+
 
 
     const [dailyReportSymptom, setDailyReportSymptom] = useState({
@@ -51,30 +64,22 @@ export const DailyReportSymptomForm = () => {
 
 
     const handleCheckboxChange = (event) => {
-       
+       debugger
         const symptomId = parseInt(event.target.value)
+        console.log(symptomId, "symptomId")
         
-        // const idPosition = checkedSymptoms.indexOf(symptomId)
-        // if (idPosition >= 0) {
-        //     const copy = [...checkedSymptoms]
-        //     console.log(idPosition, "idPosition test")
-        //     copy.splice(idPosition, 1)
-        //     setCheckedSymptoms(copy)
-        // } else if (idPosition < 0) {
-        //     setCheckedSymptoms([symptomId, ...checkedSymptoms])
-        // }
-
-//infinite loop here; -1 index position (cannot find symptomId in array so it returns -1). so we need to figure out why symptomId is not being put into the array
         const idPosition = checkedSymptoms.indexOf(symptomId)
-        if (idPosition != -1) {
+        if (idPosition >= 0) {
             const copy = [...checkedSymptoms]
             console.log(idPosition, "idPosition test")
-            copy.splice(idPosition, 1)
+            copy.slice(idPosition, 1)
             setCheckedSymptoms(copy)
-        } else if (idPosition === -1) {
+        } else if (idPosition < 0) {
             setCheckedSymptoms([symptomId, ...checkedSymptoms])
         }
     }
+
+
 
     // make array to push new objects to, and save that
 
@@ -85,7 +90,7 @@ export const DailyReportSymptomForm = () => {
             window.alert("Please add details about symptom")
         } else {
             let dailyReportSymptoms = newDailyReportSymptoms.filter((i) => i.urgency !== "0")
-            addDailyReportSymptom(parseInt(accessDailyReportId), dailyReportSymptoms).then(() => { history.push("/dailyReport") })
+            addDailyReportSymptom(parseInt(dailyReportId), dailyReportSymptoms).then(() => { history.push("/dailyReport") })
         }
     }
 
@@ -93,9 +98,9 @@ export const DailyReportSymptomForm = () => {
 
     let newDailyReportSymptoms = [...dailyReportSymptoms]
 
-    const urgencyForSymptoms = (symptomId, urgency) => {
+    const urgencyForSymptoms = (symptomId, urgency, comment) => {
         let dailyReportSymptomToEdit = newDailyReportSymptoms.find(d => parseInt(d.symptomId) === (parseInt(symptomId)))
-
+        
         if (dailyReportSymptomToEdit) {
             let dailyReportSymptomIndex = newDailyReportSymptoms.findIndex((i => i.symptomId === symptomId));
             newDailyReportSymptoms[dailyReportSymptomIndex].urgency = parseInt(urgency)
@@ -103,19 +108,20 @@ export const DailyReportSymptomForm = () => {
 
         } else {
             let newDailyReportSymptom = { ...dailyReportSymptom }
-            newDailyReportSymptom.DailyReportId = parseInt(accessDailyReportId);
-            newDailyReportSymptom.SymptomId = parseInt(symptomId);
-            newDailyReportSymptom.Urgency = parseInt(urgency);
-            // newDailyReportSymptom.Comment = comment
+            newDailyReportSymptom.dailyReportId = parseInt(dailyReportId);
+            newDailyReportSymptom.symptomId = parseInt(symptomId);
+            newDailyReportSymptom.urgency = parseInt(urgency);
+            newDailyReportSymptom.Comment = comment
 
             newDailyReportSymptoms.push(newDailyReportSymptom);
             setDailyReportSymptoms(newDailyReportSymptoms);
         }
     }
 
-    console.log(newDailyReportSymptoms)
+    // this is populating two more objects in the array over and over
+    console.log(newDailyReportSymptoms, "new daily report symptoms")
 
-
+    // checked={checkedSymptoms.includes(symptomId)}
 
     return (
         <form className="dailyReportForm">
@@ -129,7 +135,7 @@ export const DailyReportSymptomForm = () => {
                             {/* this returns the label and the checkbox */}
                             <div className="form-group">
                                 <label htmlFor="">{symptom.name}</label>
-                                <input key={symptom.id} type="checkbox" checked={checkedSymptoms.includes(symptomId)} id="checkbox" onChange={(e) => handleCheckboxChange(e)} value={symptom.id} />
+                                <input key={symptom.id} type="checkbox" defaultChecked id="checkbox" onChange={(e) => handleCheckboxChange(e)} value={symptom.id} />
                             </div>
                             {/* this is what appears after checkbox is checked: symptom severity select and comment */}
                             {/* severity is imported from symptom detail module, which is for the dropdown */}
@@ -143,7 +149,7 @@ export const DailyReportSymptomForm = () => {
                     return (
                         <div className="form-group">
                             <label htmlFor="">{symptom.name}</label>
-                            <input key={symptom.id} type="checkbox" checked={checkedSymptoms.includes(symptomId)} id="checkbox" onChange={(e) => handleCheckboxChange(e)} value={symptom.id} />
+                            <input key={symptom.id} type="checkbox"  id="checkbox" onChange={ handleCheckboxChange} value={symptom.id} />
                         </div>
                     )
                 })

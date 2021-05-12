@@ -15,7 +15,7 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
     console.log(taco)
 
     useEffect(() => {
-        console.log("symptom details")
+        console.log(getSymptomDetailsBySymptomId, "symptom details")
         getSymptomDetailsBySymptomId(symptomId).then(setSymptomDetails)
     }, [])
 
@@ -49,7 +49,9 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
             <fieldset className="control">
                 <div className="select">
                     <select id="classId" className="form-control"
-                      onChange={handleSelect(`${symptomId}, ${taco.urgencyLevel}`)}
+                        onChange={(e) => {
+                            handleSelect(`${symptomId}`, e.target.value);
+                        }}
                     >
                         <option value="0">Symptom Severity </option>
                         {taco.map(s => (
@@ -68,7 +70,9 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
             <fieldset className="control">
                 <div className="select">
                     <select id="classId" className="form-control"
-                      onChange={handleSelect(`${symptomId}, ${taco.urgencyLevel}`)}
+                        onChange={(e) => {
+                            handleSelect(`${symptomId}`, e.target.value);
+                        }}
                     >
                         <option value="0">Symptom Severity </option>
                         {taco.map(s => (
@@ -87,7 +91,9 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
             <fieldset className="control">
                 <div className="select">
                     <select id="classId" className="form-control"
-                      onChange={handleSelect(`${symptomId}, ${taco.urgencyLevel}`)}
+                        onChange={(e) => {
+                            handleSelect(`${symptomId}`, e.target.value);
+                        }}
                     >
                         <option value="0">Symptom Severity </option>
                         {taco.map(s => (
@@ -106,7 +112,9 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
             <fieldset className="control">
                 <div className="select">
                     <select id="classId" className="form-control"
-                     onChange={handleSelect(`${symptomId}, ${taco.urgencyLevel}`)}
+                       onChange={(e) => {
+                        handleSelect(`${symptomId}`, e.target.value);
+                    }}
                     >
                         <option value="0">Symptom Severity </option>
                         {taco.map(s => (
@@ -125,7 +133,9 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
             <fieldset className="control">
                 <div className="select">
                     <select id="classId" className="form-control"
-                      onChange={handleSelect(`${symptomId}, ${taco.urgencyLevel}`)}
+                        onChange={(e) => {
+                            handleSelect(`${symptomId}`, e.target.value);
+                        }}
                     >
                         <option value="0">Symptom Severity </option>
                         {taco.map(s => (
