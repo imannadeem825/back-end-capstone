@@ -28,9 +28,12 @@ export const DailyReportDetails = () => {
       })
   }, [])
 
-//   const dailyReportsById = dailyReports.filter(dailyReport => dailyReport.id)
 
-//map over dailyReportsById to populate only the symptoms/symptom details the patient saved to daily report
+
+// map over dailyReportsById to populate only the symptoms/symptom details the patient saved to daily report
+
+// const dailyReportsById = dailyReports.filter(dailyReport => dailyReport.id)
+
 //   dailyReports.map(dailyReport => {
 //     const dailyReportId = parseInt(dailyReport.id)
 //     if (checkedSymptoms.includes(dailyReportId)) {
@@ -54,7 +57,7 @@ export const DailyReportDetails = () => {
 
   return (
     <section className="dailyReport">
-      <h2 className="dailyReport__title">dailyReport Title: {dailyReport.date}</h2>
+      <h2 className="dailyReport__title">Daily Report: {dailyReport.date}</h2>
       <h3 className="symptom__title">Symptoms Reported</h3>
         {/* <div className="feel__title">Feel:</div>
         <div className="feel__text">{dailyReport.feel}</div>

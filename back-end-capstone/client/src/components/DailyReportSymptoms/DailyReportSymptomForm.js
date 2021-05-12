@@ -45,20 +45,33 @@ export const DailyReportSymptomForm = () => {
         // Urgency: 0
     });
 
+
     const [dailyReportSymptoms, setDailyReportSymptoms] = useState([])
-
-
     const [checkedSymptoms, setCheckedSymptoms] = useState([])
 
 
     const handleCheckboxChange = (event) => {
+       
         const symptomId = parseInt(event.target.value)
+        
+        // const idPosition = checkedSymptoms.indexOf(symptomId)
+        // if (idPosition >= 0) {
+        //     const copy = [...checkedSymptoms]
+        //     console.log(idPosition, "idPosition test")
+        //     copy.splice(idPosition, 1)
+        //     setCheckedSymptoms(copy)
+        // } else if (idPosition < 0) {
+        //     setCheckedSymptoms([symptomId, ...checkedSymptoms])
+        // }
+
+//infinite loop here; -1 index position (cannot find symptomId in array so it returns -1). so we need to figure out why symptomId is not being put into the array
         const idPosition = checkedSymptoms.indexOf(symptomId)
-        if (idPosition >= 0) {
+        if (idPosition != -1) {
             const copy = [...checkedSymptoms]
+            console.log(idPosition, "idPosition test")
             copy.splice(idPosition, 1)
             setCheckedSymptoms(copy)
-        } else if (idPosition < 0) {
+        } else if (idPosition === -1) {
             setCheckedSymptoms([symptomId, ...checkedSymptoms])
         }
     }
@@ -121,6 +134,7 @@ export const DailyReportSymptomForm = () => {
                             {/* this is what appears after checkbox is checked: symptom severity select and comment */}
                             {/* severity is imported from symptom detail module, which is for the dropdown */}
                             <Severity symptomId={symptomId} symptomDetails={symptomDetails} getSymptomDetailsBySymptomId={getSymptomDetailsBySymptomId} handleSelect={urgencyForSymptoms} />
+                           
                             <label htmlFor="">Comment</label>
                             <textarea id={symptomId}></textarea>
                         </>
