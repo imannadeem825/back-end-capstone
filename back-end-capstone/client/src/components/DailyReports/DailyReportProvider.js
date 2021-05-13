@@ -35,7 +35,7 @@ export const DailyReportProvider = (props) => {
 
     const getDailyReportById = (dailyReportId) => {
         return getToken().then((token) =>
-            fetch(`${apiUrl}/getById/${dailyReportId}`, {
+            fetch(`/getReportById/${dailyReportId}`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`

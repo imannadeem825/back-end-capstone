@@ -108,7 +108,10 @@ namespace back_end_capstone.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"DELETE FROM DailyReport WHERE Id = @id";
+                    cmd.CommandText = @"DELETE FROM DailyReportSymptom 
+                                        WHERE DailyReportId = @id;
+                                        DELETE FROM DailyReport 
+                                        WHERE Id = @id";
 
                     DbUtils.AddParameter(cmd, "@id", id);
 

@@ -98,8 +98,6 @@ namespace back_end_capstone.Repositories
                         {
                             symptom = NewSymptomObject(reader);
                             symptom.SymptomDetails = new List<SymptomDetail>();
-
-
                         };
 
                         if (DbUtils.IsNotDbNull(reader, "SymptomDetailId"))
@@ -112,7 +110,6 @@ namespace back_end_capstone.Repositories
                                 Severity = DbUtils.GetString(reader, "Severity")
                             });
                         }
-
                     }
 
               
@@ -131,8 +128,6 @@ namespace back_end_capstone.Repositories
                 Name = reader.GetString(reader.GetOrdinal("Name")),
             };
         }
-
-
     }
 
 

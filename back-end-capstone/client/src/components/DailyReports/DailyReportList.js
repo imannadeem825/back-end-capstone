@@ -11,13 +11,15 @@ export const DailyReportList = () => {
     const history = useHistory()
     let currentUser = JSON.parse(sessionStorage.getItem("userProfile"));
     console.log(currentUser)
+    
+    const userProfileId = currentUser.id
 
     useEffect(() => {
         console.log("DailyReportList: useEffect - getDailyReports")
         getAllDailyReports()
     }, [])
 
-    const filteredDailyReportsByUser = dailyReports.filter(dailyReport => dailyReport.currentUser === parseInt(currentUser))
+    const filteredDailyReportsByUser = dailyReports.filter(dailyReport => dailyReport.userProfileId === parseInt(userProfileId))
 
     return (
         <div className="dailyReports">
@@ -32,3 +34,6 @@ export const DailyReportList = () => {
         </div>
     )
 }
+
+
+//order by most recent at the top, and make the link a readable date in this format dd--mm--yyyy

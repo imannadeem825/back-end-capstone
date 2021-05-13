@@ -4,11 +4,11 @@ import { DailyReportContext } from "./DailyReportProvider"
 import { UserProfileContext } from "../UserProfiles/UserProfileProvider"
 import { useHistory, useParams } from 'react-router-dom';
 
-let currentUser = JSON.parse(sessionStorage.getItem("userProfile"));
-console.log(currentUser)
 
 
 export const DailyReportForm = () => {
+    let currentUser = JSON.parse(sessionStorage.getItem("userProfile"));
+    console.log(currentUser)
 
     const { symptoms, getAllSymptoms } = useContext(SymptomContext)
     const { addDailyReport, getAllDailyReports, getDailyReportById, dailyReportId } = useContext(DailyReportContext)

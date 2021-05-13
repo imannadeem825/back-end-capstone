@@ -99,12 +99,6 @@ WHERE Id = 18
 
 
 
-(13, 1, 1, 'Some pain'), (14, 1, 2, 'Pain with infection or bleeding'), (15, 1, 3, 'Difficulty eating and swallowing'),
-(7, 2, 1, '1-2 episodes'), (8, 2, 2, '3-5 episodes'), (9, 2, 3, 'Over 6 episodes'),
-(4, 3, 1, 'Half an hour to an hour'), (5, 3, 2, 'One to four hours'), (6, 3, 3, 'Most or all of the day'),
-(10, 4, 1, '100.5-102.1'), (11, 4, 2, '102.2-104.0'), (12, 4, 3, '104.1-106.0'),
-(1, 5, 1, '1-4 stools'), (2, 5, 2, '4-9 stools'), (3, 5, 3, '10 or more stools'),
-(16, 6, 1, '1-3 out of 10'), (17, 6, 2, '4-6 out of 10'), (18, 6, 3, '7-10 out of 10');
 
 
 INSERT INTO DailyReport (UserProfileId, [Date])
@@ -113,3 +107,20 @@ VALUES ( 1, '20210505 12:00:00 AM');
 INSERT INTO DailyReportSymptom ( DailyReportId, SymptomId, Comment, Urgency)
 VALUES ( 1, 1, 'comment', 2)
 
+ SELECT d.Id AS DailyReportSymptomId, d.DailyReportId, d.SymptomId AS ForeignKeySymptomId, d.Comment, d.Urgency,
+                        s.Id AS SymptomId, s.Name
+                        FROM DailyReportSymptom d
+                        LEFT JOIN Symptom s ON s.Id = d.SymptomId;
+
+
+SELECT dr.Id, dr.UserProfileId, dr.[Date],
+        drs.Id AS drsId, drs.DailyReportId, drs.SymptomId AS drsSymptomId, drs.Comment, drs.Urgency,
+        s.Id as SymptomId, s.[Name],
+        sd.Id as SymptomDetailId, sd.SymptomId AS SymptomDetailSymptomId, sd.UrgencyLevel, sd.Severity
+                      
+                        FROM DailyReport dr
+                        LEFT JOIN DailyReportSymptom drs ON dr.Id = drs.DailyReportId
+
+                        LEFT JOIN Symptom s ON drs.SymptomId = s.Id
+                        LEFT JOIN SymptomDetail sd ON s.Id = sd.SymptomId
+                        WHERE dr.Id = 59;

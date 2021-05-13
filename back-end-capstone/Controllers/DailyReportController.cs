@@ -31,7 +31,7 @@ namespace back_end_capstone.Controllers
         }
 
 
-        [HttpGet("/getById/{dailyReportId}")]
+        [HttpGet("/getReportById/{dailyReportId}")]
         public ActionResult Details(int dailyReportId)
         {
             var dailyReport = _dailyReportRepository.GetDailyReportById(dailyReportId);

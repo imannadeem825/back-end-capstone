@@ -9,7 +9,7 @@ using back_end_capstone.Repositories;
 
 namespace back_end_capstone.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DailyReportSymptomController : ControllerBase
@@ -44,14 +44,27 @@ namespace back_end_capstone.Controllers
 
 
 
-        [HttpPost("{id}")]
+        [HttpPost("{dailyReportId}")]
         public IActionResult DailyReport(DailyReportSymptom dailyReportSymptom)
         {
         
             _dailyReportSymptomRepository.Add(dailyReportSymptom);
-            return CreatedAtAction("Details", new { dailyReportSymptomId = dailyReportSymptom.Id }, dailyReportSymptom);
+            return NoContent();
         }
 
+        [HttpPut("dailyReportSymptomId/{id}")]
+        public IActionResult Put(int id, DailyReportSymptom dailyReportSymptom)
+        {
+            
+            if (id != dailyReportSymptom.Id)
+            {
+                return BadRequest();
+            }
+           
+            _dailyReportSymptomRepository.Update(dailyReportSymptom);
+            return NoContent();
+
+        }
 
         [HttpDelete("/dailyReportSymptom/delete/{dailyReportSymptomId}")]
         public IActionResult Delete(int dailyReportSymptomId)

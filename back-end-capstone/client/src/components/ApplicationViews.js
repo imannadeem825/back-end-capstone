@@ -14,6 +14,8 @@ import { DailyReportList } from "./DailyReports/DailyReportList"
 
 import { DailyReportSymptomForm } from "./DailyReportSymptoms/DailyReportSymptomForm"
 
+import {CommentEditForm} from "./DailyReportSymptoms/CommentEditForm"
+
 import { SymptomProvider } from "./Symptoms/SymptomProvider";
 import { DailyReportSymptomProvider } from "./DailyReportSymptoms/DailyReportSymptomProvider";
 
@@ -41,9 +43,13 @@ export default function ApplicationViews() {
                 <Route exact path="/dailyReport">
                     <DailyReportList />
                 </Route>
-                {/* <Route exact path="/dailyReport/detail/${dailyReport.id}">
+                <Route exact path="/dailyReport/detail/:dailyReportId(\d+)">
                     <DailyReportDetails />
-                </Route> */}
+                </Route>
+                <Route  path="/dailyReportSymptom/edit/:dailyReportSymptomId(\d+)" exact>
+                    <CommentEditForm />
+                </Route>
+              
 
                 {/* DAILY REPORT SYMPTOM  */}
 

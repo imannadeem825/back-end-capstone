@@ -11,18 +11,6 @@
 // get checkboxes working/returning true and false
 
 
-//infinite loop here; -1 index position (cannot find symptomId in array so it returns -1). so we need to figure out why symptomId is not being put into the array
-    //     const idPosition = checkedSymptoms.indexOf(symptomId)
-    //     if (idPosition != -1) {
-    //         const copy = [...checkedSymptoms]
-    //         console.log(idPosition, "idPosition test")
-    //         copy.splice(idPosition, 1)
-    //         setCheckedSymptoms(copy)
-    //     } else if (idPosition === -1) {
-    //         setCheckedSymptoms([symptomId, ...checkedSymptoms])
-    //     }
-    // }
-
 import React, { useContext, useEffect, useState } from "react"
 import { SymptomContext } from "../Symptoms/SymptomProvider"
 import { DailyReportContext } from "../DailyReports/DailyReportProvider"
@@ -40,38 +28,25 @@ export const DailyReportSymptomForm = () => {
     const { dailyReportId } = useParams()
     const history = useHistory();
 
-    console.log(dailyReportId, "use params")
 
     useEffect(() => {
-        console.log(getAllSymptoms, "get symptoms")
         getAllSymptoms()
-       
     }, [])
 
 
-
-
-    const [dailyReportSymptom, setDailyReportSymptom] = useState({
-        // DailyReportId: 0,
-        // SymptomId: 0,
-        // Comment: "",
-        // Urgency: 0
-    });
-
-
+    const [dailyReportSymptom, setDailyReportSymptom] = useState({});
     const [dailyReportSymptoms, setDailyReportSymptoms] = useState([])
     const [checkedSymptoms, setCheckedSymptoms] = useState([])
+    
 
 
     const handleCheckboxChange = (event) => {
-       debugger
+        //    debugger
         const symptomId = parseInt(event.target.value)
-        console.log(symptomId, "symptomId")
-        
         const idPosition = checkedSymptoms.indexOf(symptomId)
+
         if (idPosition >= 0) {
             const copy = [...checkedSymptoms]
-            console.log(idPosition, "idPosition test")
             copy.slice(idPosition, 1)
             setCheckedSymptoms(copy)
         } else if (idPosition < 0) {
@@ -80,8 +55,7 @@ export const DailyReportSymptomForm = () => {
     }
 
 
-
-    // make array to push new objects to, and save that
+    
 
     const handleSaveDailyReportSymptoms = (event) => {
         event.preventDefault()
@@ -90,17 +64,19 @@ export const DailyReportSymptomForm = () => {
             window.alert("Please add details about symptom")
         } else {
             let dailyReportSymptoms = newDailyReportSymptoms.filter((i) => i.urgency !== "0")
-            addDailyReportSymptom(parseInt(dailyReportId), dailyReportSymptoms).then(() => { history.push("/dailyReport") })
+            for (const dailyReportSymptom of dailyReportSymptoms) {
+
+                addDailyReportSymptom(parseInt(dailyReportId), dailyReportSymptom).then(() => { history.push("/dailyReport") })
+            }
         }
     }
 
 
-
     let newDailyReportSymptoms = [...dailyReportSymptoms]
 
-    const urgencyForSymptoms = (symptomId, urgency, comment) => {
+    const urgencyForSymptoms = (symptomId, urgency) => {
         let dailyReportSymptomToEdit = newDailyReportSymptoms.find(d => parseInt(d.symptomId) === (parseInt(symptomId)))
-        
+        // debugger
         if (dailyReportSymptomToEdit) {
             let dailyReportSymptomIndex = newDailyReportSymptoms.findIndex((i => i.symptomId === symptomId));
             newDailyReportSymptoms[dailyReportSymptomIndex].urgency = parseInt(urgency)
@@ -111,12 +87,33 @@ export const DailyReportSymptomForm = () => {
             newDailyReportSymptom.dailyReportId = parseInt(dailyReportId);
             newDailyReportSymptom.symptomId = parseInt(symptomId);
             newDailyReportSymptom.urgency = parseInt(urgency);
-            newDailyReportSymptom.Comment = comment
-
+           
             newDailyReportSymptoms.push(newDailyReportSymptom);
             setDailyReportSymptoms(newDailyReportSymptoms);
         }
     }
+
+    const commentsForSymptoms = (symptomId, comment) => {
+        // debugger
+        let dailyReportSymptomToEdit = newDailyReportSymptoms.find(d => parseInt(d.symptomId) === (parseInt(symptomId)))
+
+        if (dailyReportSymptomToEdit) {
+            let dailyReportSymptomIndex = newDailyReportSymptoms.findIndex((i => i.symptomId === parseInt(symptomId)));
+            newDailyReportSymptoms[dailyReportSymptomIndex].comment = comment
+            setDailyReportSymptoms(newDailyReportSymptoms);
+
+        } else {
+            let newDailyReportSymptom = { ...dailyReportSymptom }
+            newDailyReportSymptom.dailyReportId = parseInt(dailyReportId);
+            newDailyReportSymptom.symptomId = parseInt(symptomId);
+            newDailyReportSymptom.comment = comment
+           
+            console.log(comment)
+            newDailyReportSymptoms.push(newDailyReportSymptom);
+            setDailyReportSymptoms(newDailyReportSymptoms);
+        }
+    }
+  
 
     // this is populating two more objects in the array over and over
     console.log(newDailyReportSymptoms, "new daily report symptoms")
@@ -140,16 +137,17 @@ export const DailyReportSymptomForm = () => {
                             {/* this is what appears after checkbox is checked: symptom severity select and comment */}
                             {/* severity is imported from symptom detail module, which is for the dropdown */}
                             <Severity symptomId={symptomId} symptomDetails={symptomDetails} getSymptomDetailsBySymptomId={getSymptomDetailsBySymptomId} handleSelect={urgencyForSymptoms} />
-                           
+
                             <label htmlFor="">Comment</label>
-                            <textarea id={symptomId}></textarea>
+                            <textarea id={symptomId} onChange={(e) => commentsForSymptoms(`${symptomId}`, e.target.value)} value={dailyReportSymptom.comment}></textarea>
                         </>
+                      
                         )
                     }
                     return (
                         <div className="form-group">
                             <label htmlFor="">{symptom.name}</label>
-                            <input key={symptom.id} type="checkbox"  id="checkbox" onChange={ handleCheckboxChange} value={symptom.id} />
+                            <input key={symptom.id} type="checkbox" id="checkbox" onChange={handleCheckboxChange} value={symptom.id} />
                         </div>
                     )
                 })

@@ -14,7 +14,7 @@ export const DailyReportSymptomProvider = (props) => {
         to set state
     */
 
-    const apiUrl = "/api/dailyReportSymptom"
+    const apiUrl = "/api/DailyReportSymptom"
 
     const getAllDailyReportSymptoms = () => {
        
@@ -33,7 +33,7 @@ export const DailyReportSymptomProvider = (props) => {
 
     const getDailyReportSymptomById = (dailyReportSymptomId) => {
         return getToken().then((token) =>
-            fetch(`${apiUrl}/getById/${dailyReportSymptomId}`, {
+            fetch(`/getById/${dailyReportSymptomId}`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -44,9 +44,9 @@ export const DailyReportSymptomProvider = (props) => {
 
 
     const addDailyReportSymptom = (dailyReportId, dailyReportSymptom) => {
-        debugger
+        
         return getToken().then((token) =>
-            fetch(`dailyReportSymptomForm/${dailyReportId}`, {
+            fetch(`${apiUrl}/${dailyReportId}`, {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ export const DailyReportSymptomProvider = (props) => {
 
     const editDailyReportSymptom = (dailyReportSymptom) => {
         return getToken().then((token) =>
-            fetch(`${apiUrl}/${dailyReportSymptom.id}/edit`, {
+            fetch(`${apiUrl}/dailyReportSymptomId/${dailyReportSymptom.id}`, {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${token}`,

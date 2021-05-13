@@ -22,6 +22,7 @@ namespace back_end_capstone.Repositories
 
                     var reader = cmd.ExecuteReader();
 
+             
                     var dailyReportSymptoms = new List<DailyReportSymptom>();
                     while (reader.Read())
                     {
@@ -31,7 +32,8 @@ namespace back_end_capstone.Repositories
                             DailyReportId = DbUtils.GetInt(reader, "DailyReportId"),
                             SymptomId = DbUtils.GetInt(reader, "SymptomId"),
                             Comment = DbUtils.GetString(reader, "Comment"),
-                            Urgency = DbUtils.GetInt(reader, "Urgency")
+                            Urgency = DbUtils.GetInt(reader, "Urgency"),
+                         
                         });
                     }
 
@@ -51,9 +53,10 @@ namespace back_end_capstone.Repositories
                 {
                     cmd.CommandText = @"
                         SELECT Id, DailyReportId, SymptomId, Comment, Urgency
-                        FROM DailyReportSymptom";
+                        FROM DailyReportSymptom
+                        WHERE Id = @Id";
 
-                    cmd.Parameters.AddWithValue("@id", dailyReportSymptomId);
+                    cmd.Parameters.AddWithValue("@Id", dailyReportSymptomId);
                     var reader = cmd.ExecuteReader();
 
                     if (reader.Read())
@@ -116,7 +119,7 @@ namespace back_end_capstone.Repositories
                            SET DailyReportId = @DailyReportId,
                                SymptomId = @SymptomId,
                                Comment = @Comment,
-                               Urgency = @Urgency,
+                               Urgency = @Urgency
                          WHERE Id = @Id";
 
                     DbUtils.AddParameter(cmd, "@DailyReportId", dailyReportSymptom.DailyReportId);
@@ -145,5 +148,12 @@ namespace back_end_capstone.Repositories
                 }
             }
         }
+
+
     }
 }
+
+//SELECT d.Id AS DailyReportSymptomId, d.DailyReportId, d.SymptomId AS ForeignKeySymptomId, d.Comment, d.Urgency,
+//                        s.Id AS SymptomId, s.Name
+//                        FROM DailyReportSymptom d
+//                        LEFT JOIN Symptom s ON s.Id = d.SymptomId
