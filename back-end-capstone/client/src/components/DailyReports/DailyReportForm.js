@@ -7,50 +7,62 @@ import { useHistory, useParams } from 'react-router-dom';
 
 
 export const DailyReportForm = () => {
+
     let currentUser = JSON.parse(sessionStorage.getItem("userProfile"));
-    console.log(currentUser)
+    // console.log(currentUser)
 
     const { symptoms, getAllSymptoms } = useContext(SymptomContext)
-    const { addDailyReport, getAllDailyReports, getDailyReportById, dailyReportId } = useContext(DailyReportContext)
+    const { addDailyReport, dailyReportId, setDailyReportId } = useContext(DailyReportContext)
     const history = useHistory();
+    
 
+    
 
     useEffect(() => {
-        console.log("get symptoms")
+        
+
+        // debugger
+      
         getAllSymptoms()
-    }, [])
-
-
-    useEffect(() => {
-
-        console.log(dailyReportId)
-        if (dailyReportId.id > 0) {
-            const accessDailyReportId = dailyReportId.id
-            history.push(`/dailyReportSymptomForm/${accessDailyReportId}`)
-        }
     }, [dailyReportId])
 
 
-    const [dailyReport, setDailyReport] = useState({
+    // setDailyReportId(() => { 
 
-        userProfileId: currentUser.id,
-        date: "2001-05-04"
-    });
+    //     {...dailyReportId}
+    //     dailyReportId = 0
+        
+    // }
+
+    // useEffect(() => {
+
+    //     console.log(dailyReportId)
+    //     // debugger
+    //     if (dailyReportId.id > 0) {
+    //         const accessDailyReportId = dailyReportId.id
+    //         history.push(`/dailyReportSymptomForm/${accessDailyReportId}`)
+    //     }
+    // }, [dailyReportId])
 
 
-    console.log(dailyReport, "daily report test")
+   
+
+
+    // console.log(dailyReport, "daily report test")
 
 
     const handleSaveDailyReport = (e) => {
         e.preventDefault()
-        addDailyReport({
-            userProfileId: dailyReport.userProfileId,
-            date: dailyReport.date
+        addDailyReport()
+        .then((response) => response.json())
+        .then((jsonResponse) => {history.push(`/dailyReportSymptomForm/${jsonResponse.id}`)
+            // console.log(jsonResponse, "json response")
         })
     }
 
 
     return (
+        <>{console.log(dailyReportId)}
         <form className="dailyReportButton">
             <button className="btn btn-primary"
                 onClick={
@@ -59,6 +71,7 @@ export const DailyReportForm = () => {
                 Track My Symptoms
             </button>
         </form>
+        </>
     )
 }
 

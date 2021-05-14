@@ -57,7 +57,8 @@ namespace back_end_capstone.Repositories
                     cmd.CommandText = @"
                         SELECT u.Id, u.FirebaseId, u.FirstName, u.LastName, u.Email, u.Address,
                               u.CreateDateTime
-                         FROM UserProfile u";
+                         FROM UserProfile u
+                         WHERE FirebaseId = @FirebaseId";
 
                     DbUtils.AddParameter(cmd, "@FirebaseId", firebaseId);
 

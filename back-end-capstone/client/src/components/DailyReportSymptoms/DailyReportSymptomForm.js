@@ -66,8 +66,9 @@ export const DailyReportSymptomForm = () => {
             let dailyReportSymptoms = newDailyReportSymptoms.filter((i) => i.urgency !== "0")
             for (const dailyReportSymptom of dailyReportSymptoms) {
 
-                addDailyReportSymptom(parseInt(dailyReportId), dailyReportSymptom).then(() => { history.push("/dailyReport") })
+                addDailyReportSymptom(parseInt(dailyReportId), dailyReportSymptom)
             }
+            history.push("/dailyReport")
         }
     }
 

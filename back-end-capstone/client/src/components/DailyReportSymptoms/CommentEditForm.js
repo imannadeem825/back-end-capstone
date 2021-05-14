@@ -54,7 +54,6 @@ export const CommentEditForm = () => {
         if (dailyReportSymptom.comment === "") {
             window.alert("Please edit comment")
         } else {
-debugger
             editDailyReportSymptom({
                 id: dailyReportSymptomId,
                 dailyReportId: dailyReportSymptom.dailyReportId,

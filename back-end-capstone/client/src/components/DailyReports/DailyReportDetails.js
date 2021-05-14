@@ -16,7 +16,7 @@ export const DailyReportDetails = () => {
 
     
     const handleDailyReportDelete = () => {
-        deleteDailyReport(dailyReport.id)
+        deleteDailyReport(dailyReportId)
         .then(() => {
             history.push("/dailyReport")
         })
