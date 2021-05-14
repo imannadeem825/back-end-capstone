@@ -137,6 +137,7 @@ export const DailyReportSymptomForm = () => {
                             </div>
                             {/* this is what appears after checkbox is checked: symptom severity select and comment */}
                             {/* severity is imported from symptom detail module, which is for the dropdown */}
+                            
                             <Severity symptomId={symptomId} symptomDetails={symptomDetails} getSymptomDetailsBySymptomId={getSymptomDetailsBySymptomId} handleSelect={urgencyForSymptoms} />
 
                             <label htmlFor="">Comment</label>

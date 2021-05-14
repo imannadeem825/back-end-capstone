@@ -11,9 +11,9 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
 
     const [symptomDetails, setSymptomDetails] = useState([])
 
-    const taco = symptomDetails.symptomDetails
-    console.log(taco)
-
+    const symptomDetailsObjectsArray = symptomDetails.symptomDetails
+    console.log(symptomDetailsObjectsArray)
+debugger
     useEffect(() => {
         console.log(getSymptomDetailsBySymptomId, "symptom details")
         getSymptomDetailsBySymptomId(symptomId).then(setSymptomDetails)
@@ -23,7 +23,7 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
 
     if (symptomId === 1) {
 
-        return taco ? (
+        return symptomDetailsObjectsArray ? (
             <fieldset className="control">
                 <div className="select">
                     <select id="classId" className="form-control"
@@ -32,7 +32,7 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
                         }}
                     >
                         <option value="0">Symptom Severity </option>
-                        {taco.map(s => (
+                        {symptomDetailsObjectsArray.map(s => (
                             <option key={s.id} value={s.urgencyLevel}>
                                 {s.severity}
                             </option>
@@ -44,7 +44,7 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
 
     } else if (symptomId === 2) {
 
-        return taco ? (
+        return symptomDetailsObjectsArray ? (
 
             <fieldset className="control">
                 <div className="select">
@@ -54,7 +54,7 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
                         }}
                     >
                         <option value="0">Symptom Severity </option>
-                        {taco.map(s => (
+                        {symptomDetailsObjectsArray.map(s => (
                             <option key={s.id} value={s.id}>
                                 {s.severity}
                             </option>
@@ -65,7 +65,7 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
         ) : null
     } else if (symptomId === 3) {
 
-        return taco ? (
+        return symptomDetailsObjectsArray ? (
 
             <fieldset className="control">
                 <div className="select">
@@ -75,7 +75,7 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
                         }}
                     >
                         <option value="0">Symptom Severity </option>
-                        {taco.map(s => (
+                        {symptomDetailsObjectsArray.map(s => (
                             <option key={s.id} value={s.id}>
                                 {s.severity}
                             </option>
@@ -86,7 +86,7 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
         ) : null
     } else if (symptomId === 4) {
 
-        return taco ? (
+        return symptomDetailsObjectsArray ? (
 
             <fieldset className="control">
                 <div className="select">
@@ -96,7 +96,7 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
                         }}
                     >
                         <option value="0">Symptom Severity </option>
-                        {taco.map(s => (
+                        {symptomDetailsObjectsArray.map(s => (
                             <option key={s.id} value={s.id}>
                                 {s.severity}
                             </option>
@@ -107,7 +107,7 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
         ) : null
     } else if (symptomId === 5) {
 
-        return taco ? (
+        return symptomDetailsObjectsArray ? (
 
             <fieldset className="control">
                 <div className="select">
@@ -117,7 +117,7 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
                     }}
                     >
                         <option value="0">Symptom Severity </option>
-                        {taco.map(s => (
+                        {symptomDetailsObjectsArray.map(s => (
                             <option key={s.id} value={s.id}>
                                 {s.severity}
                             </option>
@@ -128,7 +128,7 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
         ) : null
     } else {
 
-        return taco ? (
+        return symptomDetailsObjectsArray ? (
 
             <fieldset className="control">
                 <div className="select">
@@ -138,7 +138,7 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
                         }}
                     >
                         <option value="0">Symptom Severity </option>
-                        {taco.map(s => (
+                        {symptomDetailsObjectsArray.map(s => (
                             <option key={s.id} value={s.id}>
                                 {s.severity}
                             </option>
