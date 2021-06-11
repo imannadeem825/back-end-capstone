@@ -13,7 +13,7 @@ export const Severity = ({ symptomId, getSymptomDetailsBySymptomId, handleSelect
 
     const symptomDetailsObjectsArray = symptomDetails.symptomDetails
     console.log(symptomDetailsObjectsArray)
-debugger
+
     useEffect(() => {
         console.log(getSymptomDetailsBySymptomId, "symptom details")
         getSymptomDetailsBySymptomId(symptomId).then(setSymptomDetails)
