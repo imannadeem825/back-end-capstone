@@ -13,8 +13,9 @@ export const DailyReportSymptom = ({ dailyReportSymptom }) => {
 
             </div>
             <div>
-                <label htmlFor="">Comment: </label>
-                <div>{dailyReportSymptom.comment}</div>
+                <h3>{dailyReportSymptom.symptom.name} </h3>
+                <div>Comment: {dailyReportSymptom.comment}</div>
+                
                 <button onClick={() => {
                     history.push(`/dailyReportSymptom/edit/${dailyReportSymptom.id}`)
                 }}>Edit

@@ -46,7 +46,7 @@ export const DailyReportDetails = () => {
         return (
             <div>
                 <h2 className="dailyReport__title">Daily Report: {dailyReport.date}</h2>
-                <h3 className="symptom__title">Symptom Comments</h3>
+              
             {filteredDailyReportSymptoms.map(dailyReportSymptom => (
                 <DailyReportSymptom key={dailyReportSymptom.id} dailyReportSymptom={dailyReportSymptom} />
             ))}
