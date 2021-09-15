@@ -124,3 +124,11 @@ SELECT dr.Id, dr.UserProfileId, dr.[Date],
                         LEFT JOIN Symptom s ON drs.SymptomId = s.Id
                         LEFT JOIN SymptomDetail sd ON s.Id = sd.SymptomId
                         WHERE dr.Id = 59;
+
+
+
+SELECT drs.Id, drs.DailyReportId, drs.SymptomId, drs.Comment, drs.Urgency,
+                        s.Name
+                        FROM DailyReportSymptom drs
+                        LEFT JOIN Symptom s ON s.Id = drs.SymptomId
+                        WHERE drs.Id = 82;

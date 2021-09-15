@@ -17,8 +17,10 @@ namespace back_end_capstone.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, DailyReportId, SymptomId, Comment, Urgency
-                        FROM DailyReportSymptom";
+                        SELECT drs.Id, drs.DailyReportId, drs.SymptomId, drs.Comment, drs.Urgency,
+                        s.Name
+                        FROM DailyReportSymptom drs
+                        LEFT JOIN Symptom s ON s.Id = drs.SymptomId";
 
                     var reader = cmd.ExecuteReader();
 
@@ -33,6 +35,10 @@ namespace back_end_capstone.Repositories
                             SymptomId = DbUtils.GetInt(reader, "SymptomId"),
                             Comment = DbUtils.GetString(reader, "Comment"),
                             Urgency = DbUtils.GetInt(reader, "Urgency"),
+                            Symptom = new Symptom()
+                            {
+                                Name = DbUtils.GetString(reader,"Name")
+                            },  
                          
                         });
                     }
@@ -52,9 +58,11 @@ namespace back_end_capstone.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, DailyReportId, SymptomId, Comment, Urgency
-                        FROM DailyReportSymptom
-                        WHERE Id = @Id";
+                        SELECT drs.Id, drs.DailyReportId, drs.SymptomId, drs.Comment, drs.Urgency,
+                        s.Name
+                        FROM DailyReportSymptom drs
+                        LEFT JOIN Symptom s ON s.Id = drs.SymptomId
+                        WHERE drs.Id = @Id";
 
                     cmd.Parameters.AddWithValue("@Id", dailyReportSymptomId);
                     var reader = cmd.ExecuteReader();
@@ -68,7 +76,11 @@ namespace back_end_capstone.Repositories
                             DailyReportId = DbUtils.GetInt(reader, "DailyReportId"),
                             SymptomId = DbUtils.GetInt(reader, "SymptomId"),
                             Comment = DbUtils.GetString(reader, "Comment"),
-                            Urgency = DbUtils.GetInt(reader, "Urgency")
+                            Urgency = DbUtils.GetInt(reader, "Urgency"),
+                            Symptom = new Symptom()
+                            {
+                                Name = DbUtils.GetString(reader, "Name")
+                            },
 
                         };
                         reader.Close();

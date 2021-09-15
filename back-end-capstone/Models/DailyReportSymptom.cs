@@ -13,7 +13,7 @@ namespace back_end_capstone.Models
 
         public int SymptomId { get; set; }
 
-        public List<Symptom> Symptoms { get; set; }
+        public Symptom Symptom { get; set; }
 
         public string Comment { get; set; }
 
