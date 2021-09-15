@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace back_end_capstone.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class SymptomController : ControllerBase

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using back_end_capstone.Models;
 using back_end_capstone.Utils;
 
+
 namespace back_end_capstone.Repositories
 {
     public class DailyReportRepository : BaseRepository, IDailyReportRepository
@@ -88,9 +89,9 @@ namespace back_end_capstone.Repositories
                     cmd.CommandText = @"
                             INSERT INTO DailyReport (UserProfileId, Date)
                             OUTPUT INSERTED.ID
-                            VALUES (@UserId, @Date)";
+                            VALUES (@UserProfileId, @Date)";
 
-                    DbUtils.AddParameter(cmd, "@UserId", dailyReport.UserProfileId);
+                    DbUtils.AddParameter(cmd, "@UserProfileId", dailyReport.UserProfileId);
                     DbUtils.AddParameter(cmd, "@Date", dailyReport.Date);
 
 
@@ -99,6 +100,7 @@ namespace back_end_capstone.Repositories
             }
         }
 
+
         public void Delete(int id)
         {
             using (var conn = Connection)
@@ -106,7 +108,10 @@ namespace back_end_capstone.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"DELETE FROM DailyReport WHERE Id = @id";
+                    cmd.CommandText = @"DELETE FROM DailyReportSymptom 
+                                        WHERE DailyReportId = @id;
+                                        DELETE FROM DailyReport 
+                                        WHERE Id = @id";
 
                     DbUtils.AddParameter(cmd, "@id", id);
 
@@ -114,7 +119,5 @@ namespace back_end_capstone.Repositories
                 }
             }
         }
-
-
     }
 }

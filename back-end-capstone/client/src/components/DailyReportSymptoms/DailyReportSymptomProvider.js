@@ -2,7 +2,7 @@ import React, { useState, createContext, useContext } from "react";
 import { UserProfileContext } from "../UserProfiles/UserProfileProvider";
 
 
-export const DailyReportContext = React.createContext();
+export const DailyReportSymptomContext = React.createContext();
 
 export const DailyReportSymptomProvider = (props) => {
     const { getToken } = useContext(UserProfileContext);
@@ -14,23 +14,26 @@ export const DailyReportSymptomProvider = (props) => {
         to set state
     */
 
-    const apiUrl = "/api/dailyReportSymptom"
+    const apiUrl = "/api/DailyReportSymptom"
 
     const getAllDailyReportSymptoms = () => {
-
+       
         return getToken().then((token) =>
         
         fetch(`${apiUrl}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`}})
+                
         .then(res => res.json())
+       
         .then(setDailyReportSymptoms))
+        
         }
 
     const getDailyReportSymptomById = (dailyReportSymptomId) => {
         return getToken().then((token) =>
-            fetch(`${apiUrl}/getById/${dailyReportSymptomId}`, {
+            fetch(`/getById/${dailyReportSymptomId}`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -40,9 +43,10 @@ export const DailyReportSymptomProvider = (props) => {
     };
 
 
-    const addDailyReportSymptom = (dailyReportSymptom) => {
+    const addDailyReportSymptom = (dailyReportId, dailyReportSymptom) => {
+        
         return getToken().then((token) =>
-            fetch(`/dailyReportSymptom/create`, {
+            fetch(`${apiUrl}/${dailyReportId}`, {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -56,7 +60,7 @@ export const DailyReportSymptomProvider = (props) => {
 
     const editDailyReportSymptom = (dailyReportSymptom) => {
         return getToken().then((token) =>
-            fetch(`/dailyReportSymptom/${dailyReportSymptom.id}/edit`, {
+            fetch(`${apiUrl}/dailyReportSymptomId/${dailyReportSymptom.id}`, {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -70,7 +74,7 @@ export const DailyReportSymptomProvider = (props) => {
 
     const deleteDailyReportSymptom = (dailyReportSymptomId) => {
         return getToken().then((token) =>
-            fetch(`/dailyReportSymptom/delete/${dailyReportSymptomId}`, {
+            fetch(`${apiUrl}/delete/${dailyReportSymptomId}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`

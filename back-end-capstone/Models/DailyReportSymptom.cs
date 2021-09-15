@@ -13,6 +13,8 @@ namespace back_end_capstone.Models
 
         public int SymptomId { get; set; }
 
+        public Symptom Symptom { get; set; }
+
         public string Comment { get; set; }
 
         public int Urgency { get; set; }

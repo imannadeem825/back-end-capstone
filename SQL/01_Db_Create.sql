@@ -27,13 +27,13 @@ CREATE TABLE [UserProfile] (
 GO
 
 CREATE TABLE [Symptom] (
-  [Id] integer PRIMARY KEY NOT NULL,
+  [Id] integer PRIMARY KEY identity NOT NULL,
   [Name] nvarchar(255) NOT NULL
 )
 GO
 
 CREATE TABLE [SymptomDetail] ( 
-	[Id] integer PRIMARY KEY NOT NULL,
+	[Id] integer PRIMARY KEY identity NOT NULL,
 	[SymptomId] integer NOT NULL,
 	[UrgencyLevel] integer NOT NULL,
 	[Severity] nvarchar(255) NOT NULL
@@ -42,14 +42,14 @@ GO
 
 
 CREATE TABLE [DailyReport] (
-  [Id] integer PRIMARY KEY NOT NULL,
+  [Id] integer PRIMARY KEY identity NOT NULL,
   [UserProfileId] integer NOT NULL,
   [Date] datetime NOT NULL
 )
 GO
 
 CREATE TABLE [DailyReportSymptom] (
-  [Id] integer PRIMARY KEY NOT NULL,
+  [Id] integer PRIMARY KEY identity NOT NULL,
   [DailyReportId] integer NOT NULL,
   [SymptomId] integer NOT NULL,
   [Comment] nvarchar(255) NOT NULL,

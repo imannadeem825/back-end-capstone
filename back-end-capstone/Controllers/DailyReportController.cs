@@ -31,7 +31,7 @@ namespace back_end_capstone.Controllers
         }
 
 
-        [HttpGet("/dailyReport/getById/{dailyReportId}")]
+        [HttpGet("/getReportById/{dailyReportId}")]
         public ActionResult Details(int dailyReportId)
         {
             var dailyReport = _dailyReportRepository.GetDailyReportById(dailyReportId);
@@ -44,7 +44,7 @@ namespace back_end_capstone.Controllers
 
 
 
-        [HttpPost("/dailyReport/create")]
+        [HttpPost]
         public IActionResult DailyReport(DailyReport dailyReport)
         {
             var currentUserProfile = GetCurrentUserProfile();
@@ -55,7 +55,7 @@ namespace back_end_capstone.Controllers
         }
 
 
-        [HttpDelete("/dailyReport/delete/{dailyReportId}")]
+        [HttpDelete("/delete/{dailyReportId}")]
         public IActionResult Delete(int dailyReportId)
         {
             _dailyReportRepository.Delete(dailyReportId);

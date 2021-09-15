@@ -18,40 +18,54 @@ namespace back_end_capstone.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                       SELECT s.Id AS SymptomId, s.Name,
-                              sd.Id AS SymptomDetailId, sd.SymptomId AS ForeignKeySymptomId, sd.UrgencyLevel, sd.Severity
-                         FROM Symptom s
-                         LEFT JOIN SymptomDetail sd on s.Id = sd.SymptomId";
+                       SELECT s.Id AS SymptomId, s.Name
+                              
+                         FROM Symptom s";
+                    //LEFT JOIN SymptomDetail sd on s.Id = sd.SymptomId";
+                    //sd.Id AS SymptomDetailId, sd.SymptomId AS ForeignKeySymptomId, sd.UrgencyLevel, sd.Severity
 
-                    Symptom symptom = null;
+
                     var reader = cmd.ExecuteReader();
 
                   
                     var symptoms = new List<Symptom>();
                     while (reader.Read())
                     {
-                        if (symptom == null)
+                        //if (symptom == null)
+                        //{
+                        //    symptom = NewSymptomObject(reader);
+                        //    symptom.SymptomDetails = new List<SymptomDetail>();
+
+                        //};
+
+                        //if (DbUtils.IsNotDbNull(reader, "SymptomDetailId"))
+                        //{
+                        //    symptom.SymptomDetails.Add(new SymptomDetail()
+                        //    {
+                        //        Id = DbUtils.GetInt(reader, "SymptomDetailId"),
+                        //        SymptomId = DbUtils.GetInt(reader, "ForeignKeySymptomId"),
+                        //        UrgencyLevel = DbUtils.GetInt(reader, "UrgencyLevel"),
+                        //        Severity = DbUtils.GetString(reader, "Severity")
+                        //    });
+                        //}
+
+                        symptoms.Add(new Symptom()
                         {
-                            symptom = NewSymptomObject(reader);
-                            symptom.SymptomDetails = new List<SymptomDetail>();
+                            Id = DbUtils.GetInt(reader, "SymptomId"),
+                            Name = DbUtils.GetString(reader, "Name"),
+                            //SymptomDetails = new List<SymptomDetail>()
+                            //{
+                            //    Id = DbUtils.GetInt(reader, "SymptomDetailId"),
+                            //    SymptomId = DbUtils.GetInt(reader, "ForeignKeySymptomId"),
+                            //    UrgencyLevel = DbUtils.GetInt(reader, "UrgencyLevel"),
+                            //    Severity = DbUtils.GetString(reader, "Severity")
 
-
-                        };
-
-                        if (DbUtils.IsNotDbNull(reader, "SymptomDetailId"))
-                        {
-                            symptom.SymptomDetails.Add(new SymptomDetail()
-                            {
-                                Id = DbUtils.GetInt(reader, "SymptomDetailId"),
-                                SymptomId = DbUtils.GetInt(reader, "ForeignKeySymptomId"),
-                                UrgencyLevel = DbUtils.GetInt(reader, "UrgencyLevel"),
-                                Severity = DbUtils.GetString(reader, "Severity")
-                            });
-                        }
+                            //}
+                        });
 
                     }
 
-                    symptoms.Add(symptom);
+                    
                     reader.Close();
                     return symptoms;
                 }
@@ -84,8 +98,6 @@ namespace back_end_capstone.Repositories
                         {
                             symptom = NewSymptomObject(reader);
                             symptom.SymptomDetails = new List<SymptomDetail>();
-
-
                         };
 
                         if (DbUtils.IsNotDbNull(reader, "SymptomDetailId"))
@@ -98,7 +110,6 @@ namespace back_end_capstone.Repositories
                                 Severity = DbUtils.GetString(reader, "Severity")
                             });
                         }
-
                     }
 
               
@@ -117,8 +128,6 @@ namespace back_end_capstone.Repositories
                 Name = reader.GetString(reader.GetOrdinal("Name")),
             };
         }
-
-
     }
 
 
