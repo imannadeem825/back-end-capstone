@@ -19,7 +19,7 @@ export default function Header() {
   return (
     <div>
       <Navbar className="nav-bar-link-container" color="light" light expand="md">
-        <NavbarBrand tag={RRNavLink} to="/">Back End Capstone</NavbarBrand>
+        <NavbarBrand tag={RRNavLink} to="/">Care On Command</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
